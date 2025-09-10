@@ -143,7 +143,7 @@ IDE support:
 
 - Clone or download the project.
 - Add EF Core packages for **SQLite** and **design/migrations** should be installed already.
-- Open the package manager console, then run **Update-database**
+- Open the package manager console, then run **Update-database** should be installed already.
 - Start the app, then navigate to **Report Issues** and submit a test entry.
 
 ---
@@ -165,12 +165,6 @@ IDE support:
 - Admin authentication and dashboards (SLAs, heatmaps).
 - Production security headers and telemetry.
 - Automated tests (unit/integration).
-
----
-
-## 📄 License
-
-Custom/institution license by default. Replace with **MIT**, **Apache-2.0**, or your organization’s preferred license if needed.
 
 ---
 
