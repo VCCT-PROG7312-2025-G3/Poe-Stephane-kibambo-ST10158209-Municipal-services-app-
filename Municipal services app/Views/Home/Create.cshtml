@@ -88,7 +88,7 @@
 
     <script>
         // ==========================
-        //  Validation + UX renforcée
+        //  Validation + UX 
         // ==========================
         (function () {
           const form      = document.getElementById('issueForm');
@@ -158,7 +158,7 @@
             $(fileInput).data('rules-added', true);
           }
 
-          // -------- Prévalidation & feedback fichier --------
+          // -------- Prevalidation & feedback ffile --------
           function validateFileAndFeedback(showPop = false) {
             if (!fileInput) return true;
 
@@ -222,7 +222,7 @@
           document.addEventListener('change', refreshSubmitState, true);
           if (fileInput) {
             fileInput.addEventListener('change', function(){
-              validateFileAndFeedback(true); // toast immédiat si invalide
+              validateFileAndFeedback(true); // imediat toast if valid
             });
           }
 

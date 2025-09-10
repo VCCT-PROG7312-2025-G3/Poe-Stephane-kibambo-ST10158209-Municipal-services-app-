@@ -52,7 +52,7 @@ namespace MunicipalMvcApp.Controllers
                 return View(vm);
             }
 
-            // ---- Upload sécurisé (optionnel) ----
+            // ---- Upload ----
             string? relPath = null;
             const long MaxBytes = 8L * 1024 * 1024; // 8 MB
             var allowed = new[] { ".jpg", ".jpeg", ".png", ".gif", ".pdf" };
@@ -72,7 +72,7 @@ namespace MunicipalMvcApp.Controllers
                     return View(vm);
                 }
 
-                // Dossier non exposé publiquement (App_Data/Uploads)
+                //  (App_Data/Uploads)
                 var uploadsDir = Path.Combine(_env.ContentRootPath, "App_Data", "Uploads");
                 Directory.CreateDirectory(uploadsDir);
 
@@ -86,11 +86,11 @@ namespace MunicipalMvcApp.Controllers
                     await vm.Attachment.CopyToAsync(stream);
                 }
 
-                // On stocke un chemin relatif (utile si besoin de debug)
+               
                 relPath = Path.Combine("App_Data", "Uploads", fileName).Replace('\\', '/');
             }
 
-            // ---- Persistance en base ----
+            
             var entity = new Issue
             {
                 Location = vm.Location,
@@ -104,7 +104,7 @@ namespace MunicipalMvcApp.Controllers
             _db.Issues.Add(entity);
             await _db.SaveChangesAsync();
             TempData["Success"] = "submitted.";
-            // Redirection vers page de succès avec le numéro de référence
+            
             return RedirectToAction(nameof(Success), new { id = entity.Id });
         }
 
@@ -124,8 +124,8 @@ namespace MunicipalMvcApp.Controllers
         [Route("Home/Error")]
         public IActionResult Error()
         {
-            // (Optionnel) logger l'erreur via ILogger<HomeController> si injecté
-            // _logger.LogError("Unhandled exception"); // exemple
+      
+           
             return View(); // Views/Home/Error.cshtml
         }
 

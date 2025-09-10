@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MunicipalMvcApp.Data; // <-- make sure you have Data/AppDbContext.cs
+using MunicipalMvcApp.Data; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +25,7 @@ var connectionString = string.IsNullOrWhiteSpace(configured)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 
-// (Optional) Enable Razor runtime compilation in Development
-// if (builder.Environment.IsDevelopment())
-//     builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
 
 var app = builder.Build();
 
@@ -42,7 +40,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-// Pages de statut (404, 403...) -> redirige vers /Home/Status/{code}
+//to /Home/Status/{code}
 app.UseStatusCodePagesWithReExecute("/Home/Status/{0}");
 
 app.UseAuthorization();
