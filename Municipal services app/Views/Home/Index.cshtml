@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="hero">
+    <div class="hero-overlay">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">Report. Track. Improve.</h1>
+                    <p class="hero-subtitle">
+                        Help us keep the municipality running smoothly. Log issues in minutes,
+                        and we’ll update you every step of the way.
+                    </p>
+                    <p class="mb-3">
+                        <a class="btn btn-primary btn-lg me-2" href="@Url.Action("Create","Home")">
+                            <i class="fa-solid fa-circle-exclamation"></i> Report an Issue
+                        </a>
+                        <a class="btn btn-outline-light btn-lg" href="@Url.Action("About","Home")">How it works</a>
+                    </p>
+                    <ul class="hero-highlights list-inline">
+                        <li class="list-inline-item"><i class="fa-regular fa-clock"></i> ~3 mins to submit</li>
+                        <li class="list-inline-item"><i class="fa-solid fa-location-dot"></i> Ward-based tracking</li>
+                        <li class="list-inline-item"><i class="fa-solid fa-shield-halved"></i> POPIA-friendly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section features">
+    <div class="container py-5">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <i class="fa-solid fa-mobile-screen-button feature-icon"></i>
+                <h3>Easy to Use</h3>
+                <p>Simple forms and clear steps. Attach photos or PDFs to speed up resolution.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fa-solid fa-users feature-icon"></i>
+                <h3>Inclusive by Design</h3>
+                <p>Plain language, responsive design, and future support for multiple languages.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fa-solid fa-rotate feature-icon"></i>
+                <h3>Feedback Loops</h3>
+                <p>Acknowledgements and status updates as your report moves through the system.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section ctas">
+    <div class="container pb-5">
+        <div class="row g-4">
+            <!-- Active card -->
+            <div class="col-md-4">
+                <div class="card h-100 card-active">
+                    <div class="card-body">
+                        <h4><i class="fa-solid fa-circle-exclamation text-primary"></i> Report Issues</h4>
+                        <p>Log problems like water leaks, potholes, refuse collection, and more.</p>
+                        <p><a class="btn btn-primary" href="@Url.Action("Create","Home")">Get Started</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Coming soon -->
+            <div class="col-md-4">
+                <div class="card h-100 card-disabled" aria-disabled="true" title="Coming soon">
+                    <div class="card-ribbon">Coming soon</div>
+                    <div class="card-body">
+                        <h4><i class="fa-solid fa-bullhorn"></i> Local Events & Announcements</h4>
+                        <p>Stay informed about community meetings, maintenance schedules, and alerts.</p>
+                        <p><a class="btn btn-outline-secondary disabled" href="#" tabindex="-1">View</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Coming soon -->
+            <div class="col-md-4">
+                <div class="card h-100 card-disabled" aria-disabled="true" title="Coming soon">
+                    <div class="card-ribbon">Coming soon</div>
+                    <div class="card-body">
+                        <h4><i class="fa-regular fa-rectangle-list"></i> Service Request Status</h4>
+                        <p>Check progress on your submitted tickets by reference number or location.</p>
+                        <p><a class="btn btn-outline-secondary disabled" href="#" tabindex="-1">Check Status</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="trust-strip">
+            <i class="fa-solid fa-lock"></i> Your data is protected. See our <a href="@Url.Action("Privacy","Home")">Privacy</a> policy.
+        </div>
+    </div>
+</section>

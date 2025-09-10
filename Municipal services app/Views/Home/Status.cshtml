@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var code = ViewBag.StatusCode as int? ?? 0;
+    var title = ViewBag.StatusTitle as string ?? $"Error {code}";
+    var message = ViewBag.StatusMessage as string ?? "An error occurred.";
+    ViewBag.Title = title;
+}
+<h2>@title</h2>
+<p>@message</p>
+<p><a class="btn btn-outline-secondary" href='@Url.Action("Index", "Home")'>Back to Home</a></p>

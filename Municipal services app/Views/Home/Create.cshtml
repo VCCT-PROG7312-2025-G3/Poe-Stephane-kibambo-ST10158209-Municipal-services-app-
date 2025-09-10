@@ -1,0 +1,244 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model MunicipalMvcApp.ViewModels.IssueCreateVm
+@{
+    ViewBag.Title = "Report Issues";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var categories = ViewBag.Categories as IEnumerable<SelectListItem>;
+}
+
+<h2 class="mt-3">Report an Issue</h2>
+
+<form asp-action="Create" asp-controller="Home" method="post" enctype="multipart/form-data" id="issueForm" role="form" aria-label="Report an issue form">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert" aria-live="assertive"></div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Location -->
+            <div class="mb-3">
+                <label asp-for="Location" class="form-label"></label>
+                <input asp-for="Location" class="form-control" placeholder="e.g., 123 Main Rd, Ward 2" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-3">
+                <label asp-for="Category" class="form-label"></label>
+                @Html.DropDownListFor(m => m.Category, categories, "Select a category", new { @class = "form-control" })
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="6" placeholder="Describe the issue..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <!-- Attachment -->
+            <div class="mb-3">
+                <label class="form-label" for="Attachment">Attach image or PDF (optional)</label>
+                <input type="file"
+                       id="Attachment"
+                       name="Attachment"
+                       class="form-control file-grey"
+                       accept=".jpg,.jpeg,.png,.gif,.pdf" />
+                <div id="AttachmentHelp" class="form-text">Max size: 8 MB. Accepted: JPG, PNG, GIF, PDF.</div>
+            </div>
+
+            <!-- Toast container (pop-up feedback) -->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastHost" aria-live="polite" aria-atomic="true"></div>
+
+
+            <!-- Actions -->
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-paper-plane"></i> Submit
+                </button>
+                <a href='@Url.Action("Index","Home")' class="btn btn-outline-secondary">Back to Main Menu</a>
+            </div>
+        </div>
+
+        <!-- Engagement panel -->
+        <div class="col-lg-4">
+            <div class="card" aria-live="polite" aria-atomic="true">
+                <div class="card-header"><strong>Engagement</strong></div>
+                <div class="card-body">
+                    <div class="progress mb-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Form completion">
+                        <div id="engagementBar" class="progress-bar" style="width:0%;" aria-valuenow="0">
+                            <span id="engagementPercent">0%</span>
+                        </div>
+                    </div>
+                    <p id="engagementMsg" class="text-muted">Start by entering a location.</p>
+                    <ul class="list-unstyled small mb-0">
+                        <li><i class="fa-solid fa-check text-success" id="chkLoc" style="visibility:hidden;"></i> Location</li>
+                        <li><i class="fa-solid fa-check text-success" id="chkCat" style="visibility:hidden;"></i> Category</li>
+                        <li><i class="fa-solid fa-check text-success" id="chkDesc" style="visibility:hidden;"></i> Description</li>
+                        <li><i class="fa-solid fa-check text-success" id="chkAtt" style="visibility:hidden;"></i> Attachment (optional)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/engagement.js"></script>
+
+    <script>
+        // ==========================
+        //  Validation + UX renforcée
+        // ==========================
+        (function () {
+          const form      = document.getElementById('issueForm');
+          const submitBtn = form?.querySelector('button[type="submit"]');
+          const fileInput = document.getElementById('Attachment');
+          const helpEl    = document.getElementById('AttachmentHelp');
+          const desc      = document.getElementById('Description');
+
+          const MAX_BYTES = 8 * 1024 * 1024;
+          const ALLOWED   = ['.jpg','.jpeg','.png','.gif','.pdf'];
+
+          // -------- Toast Bootstrap (fallback alert) --------
+          function ensureToastHost() {
+            let host = document.getElementById('toastHost');
+            if (!host) {
+              host = document.createElement('div');
+              host.id = 'toastHost';
+              host.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+              host.setAttribute('aria-live','polite');
+              host.setAttribute('aria-atomic','true');
+              document.body.appendChild(host);
+            }
+            return host;
+          }
+          function showToast(message) {
+            if (typeof bootstrap === 'undefined') { alert(message); return; }
+            const host = ensureToastHost();
+            const wrapper = document.createElement('div');
+            wrapper.className = 'toast align-items-center text-bg-dark border-0';
+            wrapper.setAttribute('role','status');
+            wrapper.innerHTML = `
+              <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>`;
+            host.appendChild(wrapper);
+            const toast = new bootstrap.Toast(wrapper, { delay: 4000 });
+            toast.show();
+            wrapper.addEventListener('hidden.bs.toast', () => wrapper.remove());
+          }
+
+          // -------- jQuery Validate / Unobtrusive --------
+          function parseUnobtrusive() {
+            if (typeof $ === 'undefined' || typeof $.validator === 'undefined') return;
+            $(form).removeData('validator');
+            $(form).removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse(form);
+          }
+
+          function addFileRulesOnce() {
+            if (typeof $ === 'undefined' || typeof $.validator === 'undefined' || !fileInput) return;
+            if ($(fileInput).data('rules-added')) return;
+
+            $.validator.addMethod('filesize', function (value, element, param) {
+              if (!element.files || !element.files.length) return true; // optionnel -> OK
+              return element.files[0].size <= param;
+            }, 'Fichier trop volumineux.');
+
+            $.validator.addMethod('fileext', function (value, element, param) {
+              if (!element.files || !element.files.length) return true;
+              const name = element.files[0].name || '';
+              const ext = name.substring(name.lastIndexOf('.')).toLowerCase();
+              return param.indexOf(ext) >= 0;
+            }, 'Type de fichier invalide.');
+
+            $(fileInput).rules('add', { filesize: MAX_BYTES, fileext: ALLOWED });
+            $(fileInput).data('rules-added', true);
+          }
+
+          // -------- Prévalidation & feedback fichier --------
+          function validateFileAndFeedback(showPop = false) {
+            if (!fileInput) return true;
+
+            // Pas de fichier => OK (optionnel)
+            if (!fileInput.files || !fileInput.files.length) {
+              if (helpEl) { helpEl.textContent = 'Taille max : 8 Mo. Types : JPG, PNG, GIF, PDF.'; helpEl.classList.remove('text-danger'); }
+              return true;
+            }
+
+            const f = fileInput.files[0];
+            const name = f.name || '';
+            const ext = name.substring(name.lastIndexOf('.')).toLowerCase();
+            const sizeMB = (f.size || 0) / (1024 * 1024);
+
+            let ok = true, reason = '';
+            if (ALLOWED.indexOf(ext) < 0) { ok = false; reason = 'Type de fichier invalide. Extensions autorisées : JPG, PNG, GIF, PDF.'; }
+            else if (f.size > MAX_BYTES)   { ok = false; reason = 'Fichier trop volumineux (max 8 Mo).'; }
+
+            if (helpEl) {
+              if (ok) {
+                helpEl.textContent = `Sélectionné : ${name} (${sizeMB.toFixed(2)} Mo) — ✅ OK`;
+                helpEl.classList.remove('text-danger');
+              } else {
+                helpEl.textContent = `Sélectionné : ${name} (${sizeMB.toFixed(2)} Mo) — ❌ ${reason}`;
+                helpEl.classList.add('text-danger');
+              }
+            }
+
+            if (!ok && showPop) showToast('Soumission bloquée : ' + reason);
+            return ok;
+          }
+
+          // -------- Toggle Submit --------
+          function refreshSubmitState() {
+            if (!form || !submitBtn) return;
+
+            parseUnobtrusive();
+            addFileRulesOnce();
+
+            let formValid = true;
+            if (typeof $ !== 'undefined' && typeof $.fn.valid === 'function') {
+              formValid = $(form).valid();
+            }
+            const fileOk = validateFileAndFeedback(false);
+            submitBtn.disabled = !(formValid && fileOk);
+          }
+
+          // -------- Compteur Description --------
+          (function setupDescCounter(){
+            if (!desc) return;
+            const counter = document.createElement('div');
+            counter.className = 'form-text text-end';
+            desc.parentElement.appendChild(counter);
+            function upd() { counter.textContent = (desc.value || '').length + ' / 4000'; }
+            desc.addEventListener('input', upd);
+            upd();
+          })();
+
+          // -------- Hooks --------
+          document.addEventListener('input',  refreshSubmitState, true);
+          document.addEventListener('change', refreshSubmitState, true);
+          if (fileInput) {
+            fileInput.addEventListener('change', function(){
+              validateFileAndFeedback(true); // toast immédiat si invalide
+            });
+          }
+
+          if (form) {
+            form.addEventListener('submit', function (e) {
+              const ok = validateFileAndFeedback(true);
+              if (!ok) { e.preventDefault(); e.stopPropagation(); }
+            });
+          }
+
+          // Init
+          refreshSubmitState();
+        })();
+    </script>
+}
+
+
+}
+

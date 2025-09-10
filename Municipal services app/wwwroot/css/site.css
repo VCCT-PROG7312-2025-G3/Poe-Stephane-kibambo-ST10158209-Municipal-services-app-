@@ -1,0 +1,657 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+.file-grey::-webkit-file-upload-button {
+    background: #e9ecef;
+    color: #6c757d;
+    border: 1px solid #ced4da;
+}
+
+.file-grey::file-selector-button {
+    background: #e9ecef;
+    color: #6c757d;
+    border: 1px solid #ced4da;
+}
+
+.file-grey {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+    .file-grey:hover::-webkit-file-upload-button,
+    .file-grey:hover::file-selector-button {
+        background: #dee2e6;
+        color: #6c757d;
+    }
+
+body {
+  margin-bottom: 60px;
+}
+/***** Layout spacing *****/
+.body-content {
+    padding-top: 70px;
+}
+
+.m-top {
+    margin-top: 15px;
+}
+
+/***** Hero *****/
+.hero {
+    background: url('/Content/hero-city.jpg') center/cover no-repeat #1d3557;
+    color: #fff;
+    position: relative;
+}
+
+.hero-overlay {
+    background: rgba(0,0,0,.45);
+    padding: 80px 0 60px;
+}
+
+.hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+    max-width: 640px;
+}
+
+.hero-highlights li {
+    margin-right: 15px;
+}
+
+/***** Features *****/
+.section {
+    padding: 40px 0;
+}
+
+.feature-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #1e88e5;
+}
+
+/***** Cards *****/
+.cards-row {
+    margin-top: 10px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+    .card .card-body {
+        padding: 20px;
+    }
+
+.card-active:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.card-disabled {
+    opacity: .75;
+}
+
+    .card-disabled .btn {
+        pointer-events: none;
+    }
+
+.card-ribbon {
+    position: absolute;
+    top: 12px;
+    right: -35px;
+    transform: rotate(45deg);
+    background: #b0b0b0;
+    color: #fff;
+    padding: 5px 45px;
+    font-size: 12px;
+}
+
+/***** Trust strip *****/
+.trust-strip {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #f7f7f7;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/***** Footer *****/
+.site-footer {
+    background: #111;
+    color: #ccc;
+    padding: 30px 0 20px;
+}
+
+    .site-footer h4 {
+        color: #fff;
+        margin-top: 0;
+    }
+
+.footer-links li {
+    margin-bottom: 6px;
+}
+
+.footer-links a {
+    color: #ddd;
+}
+
+    .footer-links a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+.socials a {
+    font-size: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+    .socials a:hover {
+        color: #fff;
+    }
+
+.disabled-link {
+    pointer-events: none;
+    color: #aaa !important;
+}
+.consent-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1040;
+    background: rgba(0,0,0,.90);
+    color: #eee;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.3);
+}
+
+    .consent-bar .link-light {
+        color: #b8d8ff;
+    }
+
+    .consent-bar .btn {
+        margin-left: 10px;
+    }
+/* Skip link: visible on focus for keyboard users */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 8px 12px;
+    background: #fff;
+    color: #000;
+    z-index: 10000;
+    border: 2px solid #000;
+}
+
+    .skip-link:focus {
+        left: 10px;
+    }
+
+/* Ensure a clear focus outline on interactive elements */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 3px solid #1e88e5;
+    outline-offset: 2px;
+}
+
+/* Disabled nav/link visual + non-interactive behavior */
+.disabled-link {
+    pointer-events: none;
+    color: #aaa !important;
+}
+
+/* Footer styles (if not already present) */
+.site-footer {
+    background: #111;
+    color: #ccc;
+    padding: 30px 0 20px;
+}
+
+    .site-footer h4 {
+        color: #fff;
+        margin-top: 0;
+    }
+
+.footer-links li {
+    margin-bottom: 6px;
+}
+
+.footer-links a {
+    color: #ddd;
+}
+
+    .footer-links a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+.socials a {
+    font-size: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+    .socials a:hover {
+        color: #fff;
+    }
+
+/* Layout spacing */
+.body-content {
+    padding-top: 70px;
+}
+
+.m-top {
+    margin-top: 15px;
+}
+/* Skip link: visible when tabbed */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 8px 12px;
+    background: #fff;
+    color: #000;
+    z-index: 10000;
+    border: 2px solid #000;
+}
+
+    .skip-link:focus {
+        left: 10px;
+    }
+
+/* Clear focus outline for keyboard users */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 3px solid #1e88e5;
+    outline-offset: 2px;
+}
+
+/* Disabled nav links */
+.disabled-link {
+    pointer-events: none;
+    color: #aaa !important;
+}
+
+/* (If not already added) layout spacing and footer */
+.body-content {
+    padding-top: 70px;
+}
+
+.m-top {
+    margin-top: 15px;
+}
+
+.site-footer {
+    background: #111;
+    color: #ccc;
+    padding: 30px 0 20px;
+}
+
+    .site-footer h4 {
+        color: #fff;
+        margin-top: 0;
+    }
+
+.footer-links li {
+    margin-bottom: 6px;
+}
+
+.footer-links a {
+    color: #ddd;
+}
+
+    .footer-links a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+.socials a {
+    font-size: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+    .socials a:hover {
+        color: #fff;
+    }
+/* spacing */
+.body-content {
+    padding-top: 70px;
+}
+
+.m-top {
+    margin-top: 15px;
+}
+
+/* hero */
+.hero {
+    background: #1d3557 url('/Content/hero-city.jpg') center/cover no-repeat;
+    color: #fff;
+}
+
+.hero-overlay {
+    background: rgba(0,0,0,.45);
+    padding: 80px 0 60px;
+}
+
+.hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+    max-width: 640px;
+}
+
+.hero-highlights li {
+    margin-right: 15px;
+}
+
+/* features & cards */
+.section {
+    padding: 40px 0;
+}
+
+.feature-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #1e88e5;
+}
+
+.cards-row {
+    margin-top: 10px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+    .card .card-body {
+        padding: 20px;
+    }
+
+.card-active:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.card-disabled {
+    opacity: .75;
+}
+
+    .card-disabled .btn {
+        pointer-events: none;
+    }
+
+.card-ribbon {
+    position: absolute;
+    top: 12px;
+    right: -35px;
+    transform: rotate(45deg);
+    background: #b0b0b0;
+    color: #fff;
+    padding: 5px 45px;
+    font-size: 12px;
+}
+
+/* trust strip */
+.trust-strip {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #f7f7f7;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* footer */
+.site-footer {
+    background: #111;
+    color: #ccc;
+    padding: 30px 0 20px;
+}
+
+    .site-footer h4 {
+        color: #fff;
+        margin-top: 0;
+    }
+
+.footer-links li {
+    margin-bottom: 6px;
+}
+
+.footer-links a {
+    color: #ddd;
+}
+
+    .footer-links a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+.socials a {
+    font-size: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+    .socials a:hover {
+        color: #fff;
+    }
+
+/* accessibility helpers */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 8px 12px;
+    background: #fff;
+    color: #000;
+    z-index: 10000;
+    border: 2px solid #000;
+}
+
+    .skip-link:focus {
+        left: 10px;
+    }
+
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 3px solid #1e88e5;
+    outline-offset: 2px;
+}
+
+.disabled-link {
+    pointer-events: none;
+    color: #aaa !important;
+}
+
+/* consent bar */
+.consent-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1040;
+    background: rgba(0,0,0,.90);
+    color: #eee;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.3);
+}
+
+    .consent-bar .link-light {
+        color: #b8d8ff;
+    }
+
+    .consent-bar .btn {
+        margin-left: 10px;
+    }
+/* Layout spacing */
+.body-content {
+    padding-top: 80px;
+}
+
+/* Skip link visible when focused */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 8px 12px;
+    background: #fff;
+    color: #000;
+    z-index: 10000;
+    border: 2px solid #000;
+}
+
+    .skip-link:focus {
+        left: 10px;
+    }
+
+/* Hero */
+.hero {
+    background: #1d3557 url('/images/hero-city.jpg') center/cover no-repeat;
+    color: #fff;
+}
+
+.hero-overlay {
+    background: rgba(0,0,0,.45);
+}
+
+.hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+    max-width: 640px;
+}
+
+.hero-highlights li {
+    margin-right: 15px;
+}
+
+/* Features & Cards */
+.section {
+}
+
+.feature-icon {
+    font-size: 46px;
+    margin-bottom: 10px;
+    color: #0d6efd;
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    position: relative;
+}
+
+.card-active:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.card-disabled {
+    opacity: .8;
+}
+
+    .card-disabled .btn {
+        pointer-events: none;
+    }
+
+.card-ribbon {
+    position: absolute;
+    top: 12px;
+    right: -36px;
+    transform: rotate(45deg);
+    background: #6c757d;
+    color: #fff;
+    padding: 4px 46px;
+    font-size: 12px;
+}
+
+.trust-strip {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #f7f7f7;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Footer */
+.site-footer {
+    background: #111;
+    color: #ccc;
+}
+
+    .site-footer h4 {
+        color: #fff;
+        margin-top: 0;
+    }
+
+.footer-links li {
+    margin-bottom: 6px;
+}
+
+.footer-links a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+    .footer-links a:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+.socials a {
+    color: #ddd;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+    .socials a:hover {
+        color: #fff;
+    }

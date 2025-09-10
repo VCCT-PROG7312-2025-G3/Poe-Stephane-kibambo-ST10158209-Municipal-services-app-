@@ -1,0 +1,27 @@
+﻿@model MunicipalMvcApp.Models.Issue
+@{
+    ViewBag.Title = "Issue Submitted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thank you!</h2>
+
+<p>Your issue has been submitted successfully.</p>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p class="mb-1"><strong>Reference #:</strong> @Model.Id</p>
+        <p class="mb-1"><strong>Location:</strong> @Model.Location</p>
+        <p class="mb-1"><strong>Category:</strong> @Model.Category</p>
+        <p class="mb-1"><strong>Submitted:</strong> @Model.CreatedAt.ToLocalTime()</p>
+        @if (!string.IsNullOrEmpty(Model.AttachmentPath))
+        {
+            <p class="mb-1"><strong>Attachment:</strong> saved to <code>@Model.AttachmentPath</code></p>
+        }
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-primary" href='@Url.Action("Create","Home")'>Report another issue</a>
+    <a class="btn btn-outline-secondary" href='@Url.Action("Index","Home")'>Back to Home</a>
+</p>
