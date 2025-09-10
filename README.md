@@ -141,13 +141,9 @@ IDE support:
 
 ## 🚀 How to run (high level)
 
-- Create an ASP.NET Core MVC project (**.NET 8**).
-- Add EF Core packages for **SQLite** and **design/migrations**.
-- Configure a connection string pointing to `App_Data/municipal.db`.
-- Register the DbContext and default MVC route in the app startup.
-- Create the **Issue** model and **IssueCreateVm** for the form.
-- Add migrations and update the database to create tables.
-- Implement pages: **Index** (landing), **Create** (form), **Success**, and optional **List/Details**.
+- Clone or download the project.
+- Add EF Core packages for **SQLite** and **design/migrations** should be installed already.
+- Open the package manager console, then run Update database
 - Start the app, then navigate to **Report Issues** and submit a test entry.
 
 ---
@@ -194,6 +190,3 @@ Custom/institution license by default. Replace with **MIT**, **Apache-2.0**, or 
 
 
 
-Sources
-
-Ask ChatGPT
