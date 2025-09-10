@@ -143,7 +143,7 @@ IDE support:
 
 - Clone or download the project.
 - Add EF Core packages for **SQLite** and **design/migrations** should be installed already.
-- Open the package manager console, then run Update database
+- Open the package manager console, then run **Update-database**
 - Start the app, then navigate to **Report Issues** and submit a test entry.
 
 ---
