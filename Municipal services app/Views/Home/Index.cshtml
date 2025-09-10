@@ -2,7 +2,8 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<section class="hero">
+<!-- HERO -->
+<section class="about-hero text-white hero-rounded">
     <div class="hero-overlay">
         <div class="container py-5">
             <div class="row">
@@ -13,10 +14,10 @@
                         and we’ll update you every step of the way.
                     </p>
                     <p class="mb-3">
-                        <a class="btn btn-primary btn-lg me-2" href="@Url.Action("Create","Home")">
+                        <a class="btn btn-primary btn-lg me-2" href="@Url.Action("Create", "Home")">
                             <i class="fa-solid fa-circle-exclamation"></i> Report an Issue
                         </a>
-                        <a class="btn btn-outline-light btn-lg" href="@Url.Action("About","Home")">How it works</a>
+                        <a class="btn btn-outline-light btn-lg" href="@Url.Action("About", "Home")">How it works</a>
                     </p>
                     <ul class="hero-highlights list-inline">
                         <li class="list-inline-item"><i class="fa-regular fa-clock"></i> ~3 mins to submit</li>
@@ -60,7 +61,7 @@
                     <div class="card-body">
                         <h4><i class="fa-solid fa-circle-exclamation text-primary"></i> Report Issues</h4>
                         <p>Log problems like water leaks, potholes, refuse collection, and more.</p>
-                        <p><a class="btn btn-primary" href="@Url.Action("Create","Home")">Get Started</a></p>
+                        <p><a class="btn btn-primary" href="@Url.Action("Create", "Home")">Get Started</a></p>
                     </div>
                 </div>
             </div>
@@ -89,7 +90,28 @@
         </div>
 
         <div class="trust-strip">
-            <i class="fa-solid fa-lock"></i> Your data is protected. See our <a href="@Url.Action("Privacy","Home")">Privacy</a> policy.
+            <i class="fa-solid fa-lock"></i> Your data is protected. See our <a href="@Url.Action("Privacy", "Home")">Privacy</a> policy.
         </div>
     </div>
 </section>
+@section Scripts {
+    <script>
+        (function () {
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const els = document.querySelectorAll('.reveal-on-scroll');
+            if (!prefersReduced && 'IntersectionObserver' in window) {
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add('reveal-visible');
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.12 });
+                els.forEach(el => obs.observe(el));
+            } else {
+                els.forEach(el => el.classList.add('reveal-visible'));
+            }
+        })();
+    </script>
+}

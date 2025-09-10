@@ -2,14 +2,250 @@
     ViewBag.Title = "About";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>About</h2>
-<p>
-    This portal enables residents to report issues, receive updates, and participate in improving municipal services.
-    It is designed to be simple, mobile-friendly, and inclusive.
-</p>
-<ul>
-    <li>Report issues like water leaks, potholes, electricity faults, and sanitation problems.</li>
-    <li>Attach photos or PDFs to help our teams resolve matters faster.</li>
-    <li>Future features: local events & announcements, service request status tracking.</li>
-</ul>
-<p>For assistance email <a href="mailto:support@municipality.gov">support@municipality.gov</a>.</p>
+
+<section class="about-hero text-white">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <p class="eyebrow text-uppercase text-white-50 mb-2">About this platform</p>
+                <h1 class="display-5 fw-bold mb-3 reveal-on-scroll">Partnering with residents to improve municipal services</h1>
+                <p class="lead mb-4 reveal-on-scroll" style="max-width: 720px;">
+                    This portal makes it simple to report issues like water leaks, potholes, electricity faults, and sanitation problems.
+                    It’s built to be mobile-friendly, inclusive, and transparent—so everyone can participate.
+                </p>
+                <div class="d-flex gap-2 reveal-on-scroll">
+                    <a class="btn btn-primary btn-lg" href="@Url.Action("Create", "Home")">
+                        <i class="fa-solid fa-circle-exclamation"></i> Report an Issue
+                    </a>
+                    <a class="btn btn-outline-light btn-lg" href="@Url.Action("Privacy", "Home")">
+                        <i class="fa-regular fa-file-lines"></i> Privacy Policy
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 mt-4 mt-lg-0 text-center reveal-on-scroll">
+                <div class="about-illustration shadow-lg rounded-4 p-4">
+                    <i class="fa-solid fa-city fa-4x mb-3"></i>
+                    <p class="mb-0">Designed for low data usage, accessibility, and clarity.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Decorative wave -->
+    <div class="about-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,0 C240,80 480,120 720,120 C960,120 1200,80 1440,0 L1440,120 L0,120 Z" fill="#ffffff"></path>
+        </svg>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row g-5 align-items-center">
+        <div class="col-lg-6 reveal-on-scroll">
+            <h2 class="fw-semibold mb-3">Our mission</h2>
+            <p class="mb-3">
+                Empower residents to quickly log service issues, receive updates, and hold
+                the municipality accountable through transparent feedback loops.
+            </p>
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i> Fast, simple reporting—finish in minutes.</li>
+                <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i> Inclusive by design—plain language, responsive layout.</li>
+                <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i> Data protection and privacy by default.</li>
+                <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i> Clear status and timelines on requests.</li>
+            </ul>
+        </div>
+        <div class="col-lg-6 reveal-on-scroll">
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="card card-hover h-100 text-center p-4">
+                        <i class="fa-solid fa-mobile-screen-button fa-2x text-primary mb-2"></i>
+                        <h5>Mobile-first</h5>
+                        <p class="small text-muted mb-0">Optimized for phones and low-data usage.</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card card-hover h-100 text-center p-4">
+                        <i class="fa-solid fa-language fa-2x text-primary mb-2"></i>
+                        <h5>Inclusive</h5>
+                        <p class="small text-muted mb-0">Clear wording and accessible patterns.</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card card-hover h-100 text-center p-4">
+                        <i class="fa-solid fa-shield-halved fa-2x text-primary mb-2"></i>
+                        <h5>Trust & Safety</h5>
+                        <p class="small text-muted mb-0">POPIA-aligned, with data minimization.</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card card-hover h-100 text-center p-4">
+                        <i class="fa-solid fa-rotate fa-2x text-primary mb-2"></i>
+                        <h5>Feedback Loops</h5>
+                        <p class="small text-muted mb-0">You’re updated at each step.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">How it works</h2>
+        <div class="row g-4">
+            <div class="col-md-4 reveal-on-scroll">
+                <div class="card h-100 card-hover p-4">
+                    <div class="icon-badge bg-primary text-white">1</div>
+                    <h5 class="mt-3">Submit your report</h5>
+                    <p class="mb-0">Provide the location, pick a category, describe the issue, and optionally attach a photo or PDF.</p>
+                </div>
+            </div>
+            <div class="col-md-4 reveal-on-scroll">
+                <div class="card h-100 card-hover p-4">
+                    <div class="icon-badge bg-primary text-white">2</div>
+                    <h5 class="mt-3">Receive a reference</h5>
+                    <p class="mb-0">You’ll get a reference number to track the request and see progress updates.</p>
+                </div>
+            </div>
+            <div class="col-md-4 reveal-on-scroll">
+                <div class="card h-100 card-hover p-4">
+                    <div class="icon-badge bg-primary text-white">3</div>
+                    <h5 class="mt-3">We resolve & report back</h5>
+                    <p class="mb-0">The municipality assigns the right team, resolves the issue, and shares a summary.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row text-center g-4">
+        <div class="col-md-3 reveal-on-scroll">
+            <div class="stat card card-hover h-100 p-4">
+                <i class="fa-regular fa-clock fa-2x text-primary mb-2"></i>
+                <div class="display-6 fw-bold counter" data-count-to="3">0</div>
+                <p class="mb-0 text-muted">Avg minutes to submit</p>
+            </div>
+        </div>
+        <div class="col-md-3 reveal-on-scroll">
+            <div class="stat card card-hover h-100 p-4">
+                <i class="fa-solid fa-location-dot fa-2x text-primary mb-2"></i>
+                <div class="display-6 fw-bold counter" data-count-to="100">0</div>
+                <p class="mb-0 text-muted">Wards supported</p>
+            </div>
+        </div>
+        <div class="col-md-3 reveal-on-scroll">
+            <div class="stat card card-hover h-100 p-4">
+                <i class="fa-solid fa-shield-heart fa-2x text-primary mb-2"></i>
+                <div class="display-6 fw-bold counter" data-count-to="0">0</div>
+                <p class="mb-0 text-muted">Data breaches</p>
+            </div>
+        </div>
+        <div class="col-md-3 reveal-on-scroll">
+            <div class="stat card card-hover h-100 p-4">
+                <i class="fa-solid fa-thumbs-up fa-2x text-primary mb-2"></i>
+                <div class="display-6 fw-bold counter" data-count-to="95">0</div>
+                <p class="mb-0 text-muted">User satisfaction (%)</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-white py-5">
+    <div class="container">
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">Our principles</h2>
+        <div class="row g-4">
+            <div class="col-md-6 reveal-on-scroll">
+                <div class="card h-100 card-hover p-4">
+                    <h5><i class="fa-solid fa-universal-access text-primary me-2"></i> Accessibility</h5>
+                    <p class="mb-0">Clear labels, keyboard-friendly navigation, and responsive layouts to support a diverse user base.</p>
+                </div>
+            </div>
+            <div class="col-md-6 reveal-on-scroll">
+                <div class="card h-100 card-hover p-4">
+                    <h5><i class="fa-solid fa-user-shield text-primary me-2"></i> Privacy</h5>
+                    <p class="mb-0">Data-minimizing forms, clear consent, and secure file handling aligned with local regulations.</p>
+                </div>
+            </div>
+            <div class="col-md-6 reveal-on-scroll">
+                <div class="card h-100 card-hover p-4">
+                    <h5><i class="fa-solid fa-globe-africa text-primary me-2"></i> Inclusion</h5>
+                    <p class="mb-0">Plain language and readiness for multilingual support to include more residents.</p>
+                </div>
+            </div>
+            <div class="col-md-6 reveal-on-scroll">
+                <div class="card h-100 card-hover p-4">
+                    <h5><i class="fa-solid fa-chart-line text-primary me-2"></i> Transparency</h5>
+                    <p class="mb-0">Status tracking and report-backs that show progress and hold us accountable.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-cta text-white text-center">
+    <div class="container py-5">
+        <h2 class="fw-semibold mb-3 reveal-on-scroll">Have a question or suggestion?</h2>
+        <p class="lead mb-4 reveal-on-scroll">We’re here to help—reach out and we’ll respond promptly.</p>
+        <a class="btn btn-light btn-lg reveal-on-scroll" href="mailto:support@municipality.gov">
+            <i class="fa-regular fa-envelope"></i> support@municipality.gov
+        </a>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            // Respect reduced motion
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Reveal-on-scroll
+            const els = document.querySelectorAll('.reveal-on-scroll');
+            if (!prefersReduced && 'IntersectionObserver' in window) {
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add('reveal-visible');
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.12 });
+                els.forEach(el => obs.observe(el));
+            } else {
+                els.forEach(el => el.classList.add('reveal-visible'));
+            }
+
+            // Animated counters
+            const counters = document.querySelectorAll('.counter');
+            const format = new Intl.NumberFormat();
+            function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+            function animateCounter(el) {
+                const target = parseInt(el.getAttribute('data-count-to') || '0', 10);
+                const duration = prefersReduced ? 0 : 1200;
+                const start = performance.now();
+
+                function tick(now) {
+                    const p = Math.min(1, (now - start) / duration);
+                    const value = Math.round(target * (duration ? easeOutCubic(p) : 1));
+                    el.textContent = format.format(value);
+                    if (p < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            }
+
+            if (!prefersReduced && 'IntersectionObserver' in window) {
+                const obs2 = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            animateCounter(e.target);
+                            obs2.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+                counters.forEach(c => obs2.observe(c));
+            } else {
+                counters.forEach(c => animateCounter(c));
+            }
+        })();
+    </script>
+}

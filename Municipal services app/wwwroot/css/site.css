@@ -655,3 +655,319 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
     .socials a:hover {
         color: #fff;
     }
+/* About hero */
+.about-hero {
+    position: relative;
+    background: linear-gradient(135deg, #1d3557 0%, #2a5298 100%);
+    overflow: hidden;
+}
+
+    .about-hero .about-illustration {
+        background: rgba(255,255,255,0.08);
+        backdrop-filter: blur(3px);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 1rem;
+    }
+
+.about-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    line-height: 0;
+}
+
+    .about-wave svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+/* Cards & hover */
+.card-hover {
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1);
+}
+
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,.12);
+    }
+
+/* Icon badge (steps) */
+.icon-badge {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+/* Eyebrow text */
+.eyebrow {
+    letter-spacing: .12em;
+    font-weight: 600;
+}
+
+/* Reveal-on-scroll */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .6s cubic-bezier(.2,.8,.2,1), transform .6s cubic-bezier(.2,.8,.2,1);
+    will-change: opacity, transform;
+}
+
+.reveal-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Stats */
+.stat .display-6 {
+    font-size: 2.25rem;
+}
+
+/* CTA strip */
+.about-cta {
+    background: linear-gradient(135deg, #2a5298 0%, #1d3557 100%);
+}
+/* --- Fix: Wave should sit behind content and not cover CTAs --- */
+.about-hero {
+    position: relative;
+    /* Give space for the wave shape (80px tall) + breathing room */
+    padding-bottom: 6.5rem; /* ~104px; tweak to taste */
+    /* If something elsewhere adds rounding, kill it here */
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    /* Let content spill if needed */
+    overflow: visible;
+}
+
+    .about-hero .hero-overlay {
+        position: relative;
+        z-index: 2; /* content above the wave */
+    }
+
+    .about-hero .about-wave {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px; /* matches your SVG container height */
+        z-index: 1; /* wave behind content */
+        pointer-events: none; /* clicks pass through (so buttons remain clickable) */
+    }
+
+    /* Make absolutely sure buttons are on top */
+    .about-hero .btn {
+        position: relative;
+        z-index: 3;
+    }
+
+    .about-wave svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+.eyebrow {
+    letter-spacing: .12em;
+    font-weight: 600;
+}
+
+.card-hover {
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1);
+}
+
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,.12);
+    }
+
+/* Reveal-on-scroll */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .6s cubic-bezier(.2,.8,.2,1), transform .6s cubic-bezier(.2,.8,.2,1);
+    will-change: opacity, transform;
+}
+
+.reveal-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* ---- Home-specific ---- */
+.hero-overlay {
+    background: radial-gradient(80% 120% at 10% 10%, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 60%);
+}
+
+.hero-title {
+    text-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+
+.hero-subtitle {
+    max-width: 700px;
+}
+
+.hero-highlights .list-inline-item {
+    margin-right: 1rem;
+    color: rgba(255,255,255,.9);
+}
+
+.hero-highlights i {
+    margin-right: .35rem;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: .5rem;
+}
+
+/* CTA cards */
+.card-active {
+    border-top: 3px solid #0d6efd;
+}
+
+.card-disabled {
+    position: relative;
+    opacity: .85;
+    filter: grayscale(.2);
+}
+
+    .card-disabled .btn.disabled {
+        pointer-events: none;
+    }
+
+.card-ribbon {
+    position: absolute;
+    top: 12px;
+    right: -28px;
+    background: #6c757d;
+    color: #fff;
+    padding: .25rem .75rem;
+    transform: rotate(45deg);
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+/* Trust strip */
+.trust-strip {
+    border: 1px solid #e9ecef;
+    border-radius: .75rem;
+    padding: .75rem 1rem;
+    display: inline-flex;
+    gap: .5rem;
+    align-items: center;
+    background: #fff;
+}
+
+    .trust-strip i {
+        color: #0d6efd;
+    }
+
+    .trust-strip a {
+        text-decoration: underline;
+    }
+/* ================= Navbar & Footer gradient theme (Bootstrap 5) ================= */
+
+/* Gradient navbar that matches the hero */
+.navbar-gradient {
+    background: linear-gradient(135deg, #1d3557 0%, #2a5298 100%) !important;
+    border: 0;
+    color: #f8f9fa;
+}
+
+/* Subtle shadow for depth */
+.navbar-shadow {
+    box-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+
+/* Brand & links */
+.navbar-gradient .navbar-brand,
+.navbar-gradient .navbar-nav .nav-link {
+    color: #f1f6ff !important;
+}
+
+    .navbar-gradient .navbar-brand:hover,
+    .navbar-gradient .navbar-nav .nav-link:hover,
+    .navbar-gradient .navbar-nav .nav-link:focus {
+        color: #ffffff !important;
+        background-color: rgba(255,255,255,.08);
+        border-radius: .375rem;
+    }
+
+    /* Active/current nav item */
+    .navbar-gradient .navbar-nav .nav-link.active,
+    .navbar-gradient .navbar-nav .nav-link.active:focus,
+    .navbar-gradient .navbar-nav .nav-link.active:hover {
+        color: #ffffff !important;
+        background-color: rgba(255,255,255,.12) !important;
+        border-radius: .375rem;
+    }
+
+    /* Disabled nav items (coming soon) */
+    .navbar-gradient .navbar-nav .nav-link.disabled {
+        color: rgba(255,255,255,.65) !important;
+    }
+
+    /* Keep contrast/focus visible on the gradient */
+    .navbar-gradient .navbar-brand:focus,
+    .navbar-gradient .navbar-nav .nav-link:focus {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+    }
+
+/* Ensure the toggler icon is visible on dark gradient */
+.navbar-gradient .navbar-toggler {
+    border-color: rgba(255,255,255,.35);
+}
+
+    .navbar-gradient .navbar-toggler .navbar-toggler-icon {
+        background-image: var(--bs-navbar-toggler-icon-bg, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"));
+    }
+
+/* ================= Footer gradient theme ================= */
+
+.site-footer.gradient {
+    background: linear-gradient(135deg, #1d3557 0%, #2a5298 100%);
+    color: #e7eeff;
+}
+
+    .site-footer.gradient h4 {
+        color: #ffffff;
+    }
+
+    .site-footer.gradient a {
+        color: #d5e7ff;
+        text-decoration: none;
+    }
+
+        .site-footer.gradient a:hover,
+        .site-footer.gradient a:focus {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+    /* Social icons */
+    .site-footer.gradient .socials a {
+        color: #d5e7ff;
+        transition: transform .25s ease, color .25s ease;
+        margin-right: .5rem;
+    }
+
+        .site-footer.gradient .socials a:hover,
+        .site-footer.gradient .socials a:focus {
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+/* Top border line for copyright row */
+.site-footer .copyright {
+    border-top: 1px solid rgba(255,255,255,.18);
+    padding-top: 10px;
+    margin-top: 10px;
+}

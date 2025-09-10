@@ -16,7 +16,7 @@
         <p class="mb-1"><strong>Submitted:</strong> @Model.CreatedAt.ToLocalTime()</p>
         @if (!string.IsNullOrEmpty(Model.AttachmentPath))
         {
-            <p class="mb-1"><strong>Attachment:</strong> saved to <code>@Model.AttachmentPath</code></p>
+            <p class="mb-1"><strong>Attachment:</strong> <code>@System.IO.Path.GetFileName(Model.AttachmentPath)</code></p>
         }
     </div>
 </div>

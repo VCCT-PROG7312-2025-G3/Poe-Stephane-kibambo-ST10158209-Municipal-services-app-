@@ -38,7 +38,7 @@
 
             <!-- Attachment -->
             <div class="mb-3">
-                <label class="form-label" for="Attachment">Attach image or PDF (optional)</label>
+                <label class="form-label" for="Attachment">Attach a supporting document (eg.image,pdf,...) </label>
                 <input type="file"
                        id="Attachment"
                        name="Attachment"
@@ -75,7 +75,7 @@
                         <li><i class="fa-solid fa-check text-success" id="chkLoc" style="visibility:hidden;"></i> Location</li>
                         <li><i class="fa-solid fa-check text-success" id="chkCat" style="visibility:hidden;"></i> Category</li>
                         <li><i class="fa-solid fa-check text-success" id="chkDesc" style="visibility:hidden;"></i> Description</li>
-                        <li><i class="fa-solid fa-check text-success" id="chkAtt" style="visibility:hidden;"></i> Attachment (optional)</li>
+                        <li><i class="fa-solid fa-check text-success" id="chkAtt" style="visibility:hidden;"></i> Attachment </li>
                     </ul>
                 </div>
             </div>
@@ -162,9 +162,9 @@
           function validateFileAndFeedback(showPop = false) {
             if (!fileInput) return true;
 
-            // Pas de fichier => OK (optionnel)
+            // no file => OK 
             if (!fileInput.files || !fileInput.files.length) {
-              if (helpEl) { helpEl.textContent = 'Taille max : 8 Mo. Types : JPG, PNG, GIF, PDF.'; helpEl.classList.remove('text-danger'); }
+              if (helpEl) { helpEl.textContent = ' max size : 8 Mo. Types : JPG, PNG, GIF, PDF.'; helpEl.classList.remove('text-danger'); }
               return true;
             }
 
@@ -174,20 +174,20 @@
             const sizeMB = (f.size || 0) / (1024 * 1024);
 
             let ok = true, reason = '';
-            if (ALLOWED.indexOf(ext) < 0) { ok = false; reason = 'Type de fichier invalide. Extensions autorisées : JPG, PNG, GIF, PDF.'; }
-            else if (f.size > MAX_BYTES)   { ok = false; reason = 'Fichier trop volumineux (max 8 Mo).'; }
+            if (ALLOWED.indexOf(ext) < 0) { ok = false; reason = 'invalide file type. authorized Extensions  : JPG, PNG, GIF, PDF.'; }
+            else if (f.size > MAX_BYTES)   { ok = false; reason = 'Max file size allowed is  8 Mo.'; }
 
             if (helpEl) {
               if (ok) {
-                helpEl.textContent = `Sélectionné : ${name} (${sizeMB.toFixed(2)} Mo) — ✅ OK`;
+                helpEl.textContent = `Selected : ${name} (${sizeMB.toFixed(2)} Mo) — ✅ File Accepted`;
                 helpEl.classList.remove('text-danger');
               } else {
-                helpEl.textContent = `Sélectionné : ${name} (${sizeMB.toFixed(2)} Mo) — ❌ ${reason}`;
+                helpEl.textContent = `Selected: ${name} (${sizeMB.toFixed(2)} Mo) — ❌ ${reason}`;
                 helpEl.classList.add('text-danger');
               }
             }
 
-            if (!ok && showPop) showToast('Soumission bloquée : ' + reason);
+            if (!ok && showPop) showToast('submission blocked : ' + reason);
             return ok;
           }
 
@@ -240,5 +240,5 @@
 }
 
 
-}
+
 

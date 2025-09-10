@@ -1,14 +1,226 @@
 ﻿@{
     ViewBag.Title = "Privacy";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var updated = DateTime.UtcNow.ToString("dd MMM yyyy");
 }
-<h2>Privacy</h2>
-<p>
-    We collect only the information necessary to process your report (location, category, description, and any files you upload).
-    Your data is stored securely and is not shared with third parties without your consent, unless required by law.
-</p>
-<p>
-    Uploaded files are stored under secure application storage and are accessed only by authorised municipal staff.
-    You can request removal or correction of your information by contacting
-    <a href="mailto:support@municipality.gov">support@municipality.gov</a>.
-</p>
+
+<!-- HERO -->
+<section class="about-hero text-white hero-rounded">
+    <div class="hero-overlay">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <p class="eyebrow text-white-50 reveal-on-scroll">Privacy & Data Protection</p>
+                    <h1 class="hero-title reveal-on-scroll">Your data. Your trust. Our responsibility.</h1>
+                    <p class="hero-subtitle reveal-on-scroll">
+                        We collect only what we need to deliver services, keep it secure, and
+                        give you clear choices and control.
+                    </p>
+                    <p class="mb-3 reveal-on-scroll">
+                        <a class="btn btn-primary btn-lg me-2" href='@Url.Action("Create", "Home")'>
+                            <i class="fa fa-exclamation-circle"></i> Report an Issue
+                        </a>
+                        <a class="btn btn-outline-light btn-lg" href="mailto:support@municipality.gov">
+                            <i class="fa fa-envelope"></i> Contact Support
+                        </a>
+                    </p>
+                    <ul class="hero-highlights list-inline reveal-on-scroll">
+                        <li class="list-inline-item"><i class="fa fa-lock"></i> Encrypted in transit</li>
+                        <li class="list-inline-item"><i class="fa fa-database"></i> Minimal data collected</li>
+                        <li class="list-inline-item"><i class="fa fa-shield"></i> POPIA-aligned practices</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative wave clipped inside the rounded hero -->
+    <div class="about-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,0 C240,80 480,120 720,120 C960,120 1200,80 1440,0 L1440,120 L0,120 Z" fill="#ffffff"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- AT A GLANCE -->
+<section class="container py-5">
+    <div class="row">
+        <div class="col-md-12 reveal-on-scroll">
+            <h2 class="fw-semibold">At a glance</h2>
+            <p class="text-muted">Short summary of how we handle your information.</p>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-sm-6 col-md-3 reveal-on-scroll">
+            <div class="card card-hover h-100">
+                <div class="card-body">
+                    <h4><i class="fa fa-database text-primary"></i> What we collect</h4>
+                    <p class="text-muted">Details in your report (location, category, description), optional contact info, and any files you attach (photos/PDFs).</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3 reveal-on-scroll">
+            <div class="card card-hover h-100">
+                <div class="card-body">
+                    <h4><i class="fa fa-legal text-primary"></i> Why we collect</h4>
+                    <p class="text-muted">To register, triage, and resolve municipal service issues; to keep you updated and improve service delivery.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3 reveal-on-scroll">
+            <div class="card card-hover h-100">
+                <div class="card-body">
+                    <h4><i class="fa fa-shield text-primary"></i> How we protect</h4>
+                    <p class="text-muted">Role-based access, audit trails, HTTPS, safe file storage under App_Data (not publicly served).</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3 reveal-on-scroll">
+            <div class="card card-hover h-100">
+                <div class="card-body">
+                    <h4><i class="fa fa-user text-primary"></i> Your choices</h4>
+                    <p class="text-muted">Access, correct, or request deletion where applicable; manage consent for optional features.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-muted m-top reveal-on-scroll"><i class="fa fa-clock-o"></i> Last updated: @updated</p>
+</section>
+
+<!-- DETAILS -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">1) Scope</h2>
+        <p class="reveal-on-scroll">
+            This notice applies to the Municipal Services web application (the “Service”). It explains how the Municipality
+            (“we”, “us”) processes personal information when you report issues, attach files, or interact with the platform.
+            The Service is intended for residents and visitors reporting local service matters.
+        </p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">2) Information we collect</h2>
+        <div class="row">
+            <div class="col-md-6 reveal-on-scroll">
+                <h4><i class="fa fa-file-text-o text-primary"></i> Information you provide</h4>
+                <ul class="text-muted">
+                    <li>Issue details: location, category, description.</li>
+                    <li>Attachments: photos/PDFs that illustrate the problem.</li>
+                    <li>Optional contact details for updates (e.g., email/phone).</li>
+                </ul>
+            </div>
+            <div class="col-md-6 reveal-on-scroll">
+                <h4><i class="fa fa-desktop text-primary"></i> Information we generate or log</h4>
+                <ul class="text-muted">
+                    <li>Ticket/reference number, timestamps, workflow status.</li>
+                    <li>Technical logs (e.g., IP address, browser type) to secure and improve the Service.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">3) How we use your information</h2>
+        <ul class="text-muted reveal-on-scroll">
+            <li>Register and triage your report to the appropriate department.</li>
+            <li>Provide acknowledgements and status updates on progress.</li>
+            <li>Analyse aggregated issues to improve service planning and responsiveness.</li>
+            <li>Protect the platform against misuse, fraud, and security threats.</li>
+        </ul>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">4) Legal basis & consent</h2>
+        <p class="reveal-on-scroll">
+            We process personal information to perform a public function related to municipal service delivery
+            and in line with applicable privacy laws (including POPIA principles). Where we rely on consent (for
+            optional communications or analytics), you can withdraw it at any time.
+        </p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">5) Sharing & disclosures</h2>
+        <ul class="text-muted reveal-on-scroll">
+            <li>Internal municipal teams and verified contractors strictly for resolving your request.</li>
+            <li>Technology providers acting on our instructions under appropriate safeguards.</li>
+            <li>When required by law, to comply with legal process or protect vital interests.</li>
+        </ul>
+        <p class="text-muted reveal-on-scroll"><strong>We do not sell your personal information.</strong></p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">6) Retention</h2>
+        <p class="reveal-on-scroll">
+            We keep data only as long as necessary to fulfil the purpose collected and to comply with legal,
+            operational, or auditing requirements. Attachments are stored securely under <code>App_Data/Uploads</code>
+            and are never web-served directly.
+        </p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">7) Security</h2>
+        <ul class="text-muted reveal-on-scroll">
+            <li>HTTPS for data in transit; hardened storage locations for uploads.</li>
+            <li>Role-based access, least-privilege, and audit trails for sensitive actions.</li>
+            <li>Validation and scanning of file types and sizes; no direct file links.</li>
+        </ul>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">8) Your rights</h2>
+        <ul class="text-muted reveal-on-scroll">
+            <li>Request access to your personal information and obtain a copy.</li>
+            <li>Ask us to correct inaccuracies or, where applicable, delete information.</li>
+            <li>Object to certain processing or withdraw consent for optional features.</li>
+        </ul>
+        <p class="reveal-on-scroll">
+            To exercise your rights, contact: <a href="mailto:support@municipality.gov">support@municipality.gov</a>.
+        </p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">9) Cookies & analytics</h2>
+        <p class="reveal-on-scroll">
+            We use essential cookies to operate the Service and remember preferences (e.g., consent). If we introduce analytics or
+            performance cookies, we will request your consent via the on-site consent bar and provide clear controls to opt out.
+        </p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">10) Children’s data</h2>
+        <p class="reveal-on-scroll">
+            The Service is intended for general audiences. If you believe a child has provided personal information,
+            please contact us so we can take appropriate steps.
+        </p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">11) International transfers</h2>
+        <p class="reveal-on-scroll">
+            We aim to store and process data locally. If a trusted service provider hosts or processes data in another jurisdiction,
+            we implement contractual and technical safeguards appropriate for that transfer.
+        </p>
+
+        <h2 class="fw-semibold mb-4 reveal-on-scroll">12) Changes to this notice</h2>
+        <p class="reveal-on-scroll">
+            We may update this notice to reflect changes in the Service or applicable law.
+            Material changes will be communicated on this page with a new “Last updated” date.
+        </p>
+    </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<section class="about-cta text-white text-center">
+    <div class="container py-5">
+        <h2 class="fw-semibold mb-3 reveal-on-scroll">Questions about your privacy?</h2>
+        <p class="lead mb-4 reveal-on-scroll">We’ll respond promptly and transparently.</p>
+        <a class="btn btn-light btn-lg reveal-on-scroll" href="mailto:support@municipality.gov">
+            <i class="fa fa-envelope"></i> support@municipality.gov
+        </a>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            // Respect reduced motion
+            var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Reveal-on-scroll
+            var els = document.querySelectorAll('.reveal-on-scroll');
+            if (!prefersReduced && 'IntersectionObserver' in window) {
+                var obs = new IntersectionObserver(function(entries){
+                    entries.forEach(function(e){
+                        if (e.isIntersecting) {
+                            e.target.classList.add('reveal-visible');
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.12 });
+                [].forEach.call(els, function(el){ obs.observe(el); });
+            } else {
+                [].forEach.call(els, function(el){ el.classList.add('reveal-visible'); });
+            }
+        })();
+    </script>
+}
