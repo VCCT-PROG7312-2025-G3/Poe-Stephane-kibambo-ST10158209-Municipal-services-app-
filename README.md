@@ -107,7 +107,7 @@ Municipal_services_app/
   
 - **update-database** in the package manager console
 
-Start the project:
+4. Start the project:
 
 - **dotnet run**
 
