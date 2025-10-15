@@ -92,22 +92,6 @@ Municipal_services_app/
 └── README.md
 
  ---
- 
-## 🧱 Technologies Used
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=cs,dotnet,sqlite,bootstrap,html,css,js,visualstudio" />
-</p>
-
-- **C#** / **ASP.NET Core MVC**  
-- **Entity Framework Core (EF Core)**  
-- **LINQ** for data querying  
-- **SQL Server / SQLite (for local testing)**  
-- **Bootstrap** for front-end styling  
-- **JavaScript** for interactivity  
-- **Visual Studio / VS Code** for development  
-
----
 
 ## 🚀 Getting Started
 
