@@ -124,6 +124,72 @@ Municipal_services_app/
    git clone https://github.com/stxphanx30/Municipal_services_app.git
    cd Municipal_services_app
 
+2. Update your connection string in appsettings.json or leave the default one
+
+3. Run the database migration:
+   
+**update-database** in the package manager console
+Start the project:
+**dotnet run**
+Open your browser at:
+**👉 https://localhost:5001**
+
+---
+
+📡 API Endpoints 
+🗓️ Event Endpoints
+| Method   | Endpoint                                   | Description                    |
+| :------- | :----------------------------------------- | :----------------------------- |
+| **GET**  | `/Events`                                  | Display all events             |
+| **GET**  | `/Events/Details/{id}`                     | Show event details             |
+| **GET**  | `/Events/Search?text=music&category=Youth` | Search events by text/category |
+| **GET**  | `/Events/Recommend`                        | Get recommended events         |
+
+---
+
+📝 Report Endpoints
+| Method   | Endpoint          | Description                                             |
+| :------- | :---------------- | :------------------------------------------------------ |
+| **POST** | `/Report/Create` | Submit a new report (name, category, description, image) |
+
+---
+
+🧮 Data Structure Responsibilities
+| Structure                                 | Purpose                    |
+| :---------------------------------------- | :------------------------- |
+| `Queue<string>`                           | Stores recent search terms |
+| `PriorityQueue<Event, DateTime>`          | Manages upcoming events    |
+| `Stack<Action>`                           | Handles undo operations    |
+| `Dictionary<string, List<Event>>`         | Categorizes events         |
+| `HashSet<string>`                         | Keeps categories unique    |
+| `SortedDictionary<DateTime, List<Event>>` | Groups events by date      |
+
+---
+
+🧠 Example Flow
+
+1. User searches for “Youth Events”.
+
+2. Search term is added to the Queue and stored in searchCounts.
+
+3. Recommendations update automatically based on frequency.
+
+4. Events are displayed using SortedDictionary (by date) and Dictionary (by category).
+
+5. Reports can be submitted anytime using the ReportController.
+
+--- 
+
+📄 License
+
+This project is open-source under the MIT License.
+
+---
+
+👨‍💻 Author
+
+Developed by Stéphane Kibambo
+Municipal Services App © 2025
 
 
 
