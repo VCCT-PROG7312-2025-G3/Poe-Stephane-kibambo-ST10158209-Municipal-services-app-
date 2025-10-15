@@ -103,9 +103,9 @@ Municipal_services_app/
 
 2. Update your connection string in appsettings.json or leave the default one
 
-3. Run the database migration:
+3. In the package manager console, run the database migration:
    ```bash
-   update-database in the package manager console
+   update-database 
 
 4. Start the project:
    ```bash
