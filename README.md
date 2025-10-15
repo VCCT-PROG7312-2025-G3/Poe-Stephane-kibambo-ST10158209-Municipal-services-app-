@@ -18,7 +18,7 @@ The platform is fully modular and scalable, making it suitable for integration i
 ---
 
 ## 🚀 Features
-- 📅 Event Management (Add, View, Search, Filter)
+- 📅 Event Management(View, Search, Filter)
 - 📢 Announcements Section
 - 🧠 Smart Recommendations based on user searches
 - 🗂️ Categorization by type and date
