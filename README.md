@@ -111,9 +111,6 @@ Municipal_services_app/
    ```bash
    dotnet run
 
-Open your browser at:
-- **👉 https://localhost:5001**
-
 ---
 
 📡 API Endpoints 
