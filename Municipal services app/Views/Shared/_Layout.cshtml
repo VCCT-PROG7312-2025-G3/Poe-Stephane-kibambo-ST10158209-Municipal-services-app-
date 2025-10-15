@@ -31,8 +31,9 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-gradient navbar-shadow fixed-top" role="navigation" aria-label="Primary">
         <div class="container">
-            <a class="navbar-brand" href='@Url.Action("Index", "Home")'>
-                <i class="fa-solid fa-landmark"></i> Municipal Services
+            <a class="navbar-brand d-flex align-items-center" href='@Url.Action("Index", "Home")'>
+                <img src="~/svg/city-of-cape-town-seeklogo.svg" alt="Municipality Logo" class="me-2" style="height: 64px; width: auto;">
+                Municipal Services
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
                     aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,6 +109,9 @@
                     <h4>About</h4>
                     <p>This platform helps residents report issues, track services, and engage with local initiatives.</p>
                     <p><a class="btn btn-link p-0" href="@Url.Action("About", "Home")">Learn more →</a></p>
+                   
+                        <img src="~/svg/city-of-cape-town-seeklogo.svg" alt="Municipality Logo" class="me-2" style="height: 200px; width: auto;">
+                       
                 </div>
                 <div class="col-md-4">
                     <h4>Quick Links</h4>

@@ -1,7 +1,7 @@
 ﻿@model Municipal_services_app.Models.EventsIndexViewModel
 
 <div class="container mt-3">
-
+    <img src="~/svg/city-of-cape-town-seeklogo.svg" alt="Municipality Logo" class="me-2" style="height: 200px; width: auto;">
     <!-- Toggle Tabs -->
     <div class="d-flex justify-content-center mb-4">
         <button id="btn-events" class="tab-btn active">
@@ -128,7 +128,7 @@
         const from = fromDate.value;
         const to = toDate.value;
 
-        // stocker dans la queue si non vide
+        // stock the search terms in a queu
         if (searchTerm.trim() !== "") {
             searchQueue.push(searchTerm);
             if (searchQueue.length > MAX_QUEUE) searchQueue.shift(); // FIFO
