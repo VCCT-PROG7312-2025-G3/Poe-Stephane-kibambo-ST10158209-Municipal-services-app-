@@ -67,30 +67,31 @@ The data is stored in the database and can be viewed by municipal staff for foll
 ## 🗂️ Project Structure
 
 Municipal_services_app/
-│
+|
 ├── Controllers/
-│ ├── EventController.cs
-│ ├── ReportController.cs
-│ └── HomeController.cs
-│
+|   ├── EventController.cs
+|   ├── ReportController.cs
+|   └── HomeController.cs
+|
 ├── Models/
-│ ├── Announcement.cs
-│ ├── AppDbContext.cs
-│ ├── ErrorViewModel.cs
-│ ├── Event.cs
-│ ├── EventsIndexViewModel.cs
-│ ├── SearchTerm.cs
-│ └── Seeder.cs
-│
+|   ├── Announcement.cs
+|   ├── AppDbContext.cs
+|   ├── ErrorViewModel.cs
+|   ├── Event.cs
+|   ├── EventsIndexViewModel.cs
+|   ├── SearchTerm.cs
+|   └── Seeder.cs
+|
 ├── Services/
-│ └── EventStore.cs
-│
+|   └── EventStore.cs
+|
 ├── Views/
-│ ├── Event/
-│ ├── Report/
-│ └── Home/
-│
-└── README.m
+|   ├── Event/
+|   ├── Report/
+|   └── Home/
+|
+└── README.md
+
 
  ---
 
