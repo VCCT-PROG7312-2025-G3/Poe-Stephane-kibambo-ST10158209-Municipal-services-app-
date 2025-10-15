@@ -65,31 +65,32 @@ The data is stored in the database and can be viewed by municipal staff for foll
 ---
 
 ## 🗂️ Project Structure
+
 Municipal_services_app/
 │
 ├── Controllers/
 │ ├── EventController.cs
-│ └── ReportController.cs
+│ ├── ReportController.cs
 │ └── HomeController.cs
 │
 ├── Models/
 │ ├── Announcement.cs
-│ └── AppDbContext.cs
-│ └── ErrorViewModel.cs
-│ └── Event.cs
-│ └── EventsIndexViewModel.cs
-│ └── SearchTerm.cs
+│ ├── AppDbContext.cs
+│ ├── ErrorViewModel.cs
+│ ├── Event.cs
+│ ├── EventsIndexViewModel.cs
+│ ├── SearchTerm.cs
 │ └── Seeder.cs
-│ 
+│
 ├── Services/
 │ └── EventStore.cs
 │
 ├── Views/
 │ ├── Event/
-│ └── Report/
+│ ├── Report/
 │ └── Home/
 │
-└── README.md
+└── README.m
 
  ---
 
@@ -97,8 +98,7 @@ Municipal_services_app/
 
 1. Clone the repository  
    ```bash
-   git clone https://github.com/stxphanx30/Municipal_services_app.git
-   cd Municipal_services_app
+   git clone https://github.com/stxphanx30/poe-part-2-Stephane-kibambo-ST10158209-Municipal-services-app-.git
 
 2. Update your connection string in appsettings.json or leave the default one
 
