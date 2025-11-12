@@ -8,6 +8,20 @@ It provides an all-in-one solution for *reporting local issues, **tracking servi
 Built with *ASP.NET Core MVC, **Entity Framework Core, and **Bootstrap 5, this system leverages **advanced data structures* — such as *Binary Search Trees (BSTs), **Heaps, and **Graphs* — to organize, manage, and optimize service request tracking.
 
 ---
+🤖 AI Disclosure & Assistance
+
+This project’s development included occasional AI assistance for:
+
+Code refactoring and explanation of data structures (BST, Heap, Graph).
+
+Guidance on secure authorization and MVC best practices.
+
+UI/UX design improvements (Bootstrap-based layouts and color harmonization).
+
+The AI tools were used for learning, optimization, and documentation support only —
+all code was reviewed, customized, and tested by the author
+
+---
 
 ## 🚀 Features
 
