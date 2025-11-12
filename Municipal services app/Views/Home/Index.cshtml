@@ -73,7 +73,7 @@
             <!-- Active card -->
             <div class="col-md-4">
                 <div class="card h-100 card-active">
-                    <div class="card-ribbon">New</div>
+                    
                     <div class="card-body">
                         <h4><i class="fa-solid fa-bullhorn"></i> Local Events & Announcements</h4>
                         <p>Stay informed about community meetings, maintenance schedules, and alerts.</p>
@@ -81,14 +81,14 @@
                     </div>
                 </div>
             </div>
-            <!-- Coming soon -->
+            <!-- Active card for Service Request Status now on -->
             <div class="col-md-4">
-                <div class="card h-100 card-disabled" aria-disabled="true" title="Coming soon">
-                    <div class="card-ribbon">Coming soon</div>
+                <div class="card h-100 card-active">
+                    <div class="card-ribbon">New</div>
                     <div class="card-body">
-                        <h4><i class="fa-regular fa-rectangle-list"></i> Service Request Status</h4>
+                        <h4><i class="fa-regular fa-rectangle-list text-primary"></i> Service Request Status</h4>
                         <p>Check progress on your submitted tickets by reference number or location.</p>
-                        <p><a class="btn btn-outline-secondary disabled" href="#" tabindex="-1">Check Status</a></p>
+                        <p><a class="btn btn-primary" href="@Url.Action("Status", "Request")">Check Status</a></p>
                     </div>
                 </div>
             </div>

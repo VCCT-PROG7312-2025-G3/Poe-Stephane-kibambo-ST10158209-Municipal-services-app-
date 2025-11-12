@@ -1,0 +1,141 @@
+﻿@model Municipal_services_app.Controllers.RequestStatusVm
+@{
+    ViewBag.Title = "Service Request Status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="requests-page py-5">
+    <div class="container">
+        <!-- Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+            <div>
+                <h2 class="mb-1 page-title">Service Request Status</h2>
+                <p class="text-muted mb-0">Track progress on submitted service requests search by reference, location or description.</p>
+            </div>
+
+            <!-- Search / Filters (horizontal on md+) -->
+            <div class="d-flex gap-2 w-100 w-md-auto">
+                <form id="searchForm" method="get" asp-controller="Request" asp-action="Status" class="d-flex gap-2 align-items-center">
+                    <input name="q" value="@Model.Query" class="form-control form-control-sm search-input" placeholder="Search description, location or ref..." aria-label="Search requests" />
+                    <input type="hidden" name="category" value="@Model.SelectedCategory" id="hiddenCategory" />
+                    <button class="btn btn-sm btn-primary" type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+
+                <div class="ms-0 ms-md-2">
+                    <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Create", "Report")" title="Submit new request">
+                        <i class="fa-solid fa-plus me-1"></i> New request
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters row -->
+        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-3 gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <label class="me-2 mb-0 text-muted small">Category</label>
+                <select id="categoryFilter" class="form-select form-select-sm" style="min-width:200px;">
+                    <option value="">All Categories</option>
+                    @foreach (var c in Model.Categories)
+                    {
+                        var isSelected = c == Model.SelectedCategory;
+                        <option value="@c" selected="@(isSelected ? "selected" : null)">@c</option>
+                    }
+                </select>
+                <div class="ms-3 text-muted small d-none d-md-block">
+                    <strong>@Model.Reports.Count</strong> requests
+                </div>
+            </div>
+
+            <div class="text-muted small d-block d-md-none">
+                <strong>@Model.Reports.Count</strong> requests
+            </div>
+        </div>
+
+        <!-- Grid of requests -->
+        <div class="row g-3" id="requestsGrid">
+            @if (Model.Reports == null || !Model.Reports.Any())
+            {
+                <div class="col-12">
+                    <div class="alert alert-info mb-0">
+                        No requests found. Try a different filter or search term.
+                    </div>
+                </div>
+            }
+            else
+            {
+                foreach (var r in Model.Reports)
+                {
+                    var badgeClass = "badge status-badge secondary";
+                    switch (r.Status?.ToLowerInvariant())
+                    {
+                        case "submitted":
+                            badgeClass = "badge status-badge secondary"; break;
+                        case "underreview":
+                        case "under review":
+                            badgeClass = "badge status-badge warning"; break;
+                        case "inprogress":
+                        case "in progress":
+                            badgeClass = "badge status-badge info"; break;
+                        case "resolved":
+                            badgeClass = "badge status-badge success"; break;
+                        case "closed":
+                            badgeClass = "badge status-badge dark"; break;
+                    }
+
+                    var highlight = !string.IsNullOrEmpty(Model.HighlightRef) && string.Equals(Model.HighlightRef, r.RequestRef, StringComparison.OrdinalIgnoreCase);
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="card request-card h-100 @(highlight ? "request-highlight" : "")" role="article" aria-labelledby="title-@r.RequestRef">
+                    <div class="card-body d-flex flex-column">
+                        <header class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h5 id="title-@r.Location" class="card-title mb-1">@(!string.IsNullOrEmpty(r.ReporterName) ? r.ReporterName : r.Location)</h5>
+                                <div class="text-muted small">Ref: <strong>@r.RequestRef</strong></div>
+                            </div>
+                            <div class="text-end">
+                                <span class="@badgeClass" style="font-size:.85rem;">@r.Status</span>
+                            </div>
+                        </header>
+
+                        <p class="card-text text-muted text-truncate mb-3" style="max-height:3.6rem;">@r.Description</p>
+
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <div class="small text-muted">@r.CreatedAt.ToLocalTime().ToString("dd MMM yyyy HH:mm")</div>
+                            <div class="d-flex gap-2 align-items-center">
+                                <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", "Request", new { id = r.RequestRef })">See details</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            const cat = document.getElementById('categoryFilter');
+            const hiddenCat = document.getElementById('hiddenCategory');
+            const searchForm = document.getElementById('searchForm');
+
+            cat?.addEventListener('change', function () {
+                const v = this.value;
+                if (hiddenCat) hiddenCat.value = v || '';
+                // submit the search form to reuse controller filtering logic
+                searchForm?.submit();
+            });
+
+            // Make whole card clickable 
+            document.querySelectorAll('#requestsGrid .request-card').forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('a')) return;
+                    const link = card.querySelector('a');
+                    if (link) window.location.href = link.getAttribute('href');
+                });
+            });
+        })();
+    </script>
+}

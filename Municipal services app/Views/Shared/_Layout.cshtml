@@ -62,11 +62,11 @@
                             Local Events & Announcements
                         </a>
                     </li>
-                    <!-- Coming soon item (disabled, non-focusable) -->
                     <li class="nav-item">
-                        <span class="nav-link disabled opacity-75" aria-disabled="true" tabindex="-1">
-                            Service Status (coming soon)
-                        </span>
+                        <a class="nav-link @isActive("Request", "Status")"
+                           href='@Url.Action("Status", "Request")' @Html.Raw(ariaCurrent("Request", "Status"))>
+                            Service Request Status
+                        </a>
                     </li>
 
                     <li class="nav-item">
@@ -81,6 +81,11 @@
                             Privacy
                         </a>
                     </li>
+                    <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Login", "Account")">Admin Login</a>
+                            </li>
+                    </ul>
                 </ul>
             </div>
         </div>

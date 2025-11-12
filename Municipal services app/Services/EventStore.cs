@@ -26,7 +26,7 @@
                 LoadFromDatabase();
             }
 
-            private void LoadFromDatabase()
+            public void LoadFromDatabase()
             {
                 // clear
                 byDate.Clear();
@@ -110,9 +110,81 @@
                     searchCounts[term]++;
                 }
             }
+        // --- Persistence helpers for recommendations (paste inside EventStore class) ---
 
-            // Recommend
-            public List<Event> Recommend(int topN = 5)
+        /// <summary>
+        /// Record a search term in-memory and persist it to the DB so recommendations survive restarts.
+        /// Call this from controllers when a user performs a search (debounced on client side).
+        /// </summary>
+        public void RecordSearchAndPersist(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term)) return;
+
+            // update in-memory structures (keeps current behavior)
+            RecordSearch(term);
+
+            // persist/update in DB
+            SaveSearchTermToDb(term);
+        }
+
+        /// <summary>
+        /// Save or update a Recommendation row for the given term.
+        /// </summary>
+        private void SaveSearchTermToDb(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term)) return;
+
+            try
+            {
+                // Try find existing recommendation
+                var rec = _db.Recommendations.FirstOrDefault(r => r.Term == term);
+                if (rec == null)
+                {
+                    rec = new MunicipalMvcApp.Models.Recommendation
+                    {
+                        Term = term,
+                        Count = 1,
+                        LastSeen = DateTime.UtcNow
+                    };
+                    _db.Recommendations.Add(rec);
+                }
+                else
+                {
+                    rec.Count++;
+                    rec.LastSeen = DateTime.UtcNow;
+                    _db.Recommendations.Update(rec);
+                }
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // fail-safe: do not throw for UI; log if you have logging configured
+                // e.g. _logger?.LogWarning(ex, "Failed to save recommendation term");
+            }
+        }
+
+        /// <summary>
+        /// Read top search terms from DB (persisted recommendations).
+        /// </summary>
+        public List<string> GetTopSearchTermsFromDb(int top = 3)
+        {
+            try
+            {
+                return _db.Recommendations
+                          .OrderByDescending(r => r.Count)
+                          .ThenByDescending(r => r.LastSeen)
+                          .Take(top)
+                          .Select(r => r.Term)
+                          .ToList();
+            }
+            catch
+            {
+                // fallback to in-memory counts if DB read fails
+                return searchCounts.OrderByDescending(kv => kv.Value).Take(top).Select(kv => kv.Key).ToList();
+            }
+        }
+        // Recommend
+        public List<Event> Recommend(int topN = 5)
             {
                 var picks = new List<Event>();
 

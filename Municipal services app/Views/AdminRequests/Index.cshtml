@@ -1,0 +1,259 @@
+﻿@model Municipal_services_app.Controllers.AdminRequestsController.AdminIndexVm
+
+@{
+    Layout = null;
+    ViewBag.Title = "Admin — Manage Requests";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Municipal Services (Admin)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        :root{
+            --brand-dark:#1d3557;
+            --brand-mid:#2a5298;
+            --muted: rgba(255,255,255,0.8);
+        }
+        html,body{height:100%;}
+        body{
+            margin:0;
+            font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+            background: linear-gradient(135deg,var(--brand-dark) 0%, var(--brand-mid) 100%);
+            color:#223;
+        }
+        /* Shell */
+        .admin-shell{
+            min-height:100vh;
+            display:flex;
+            gap:1.25rem;
+            padding:1.25rem;
+        }
+
+        /* Sidebar */
+        .admin-sidebar{
+            width:260px;
+            max-width: 28%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+            border-radius:12px;
+            padding:1rem;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            border:1px solid rgba(255,255,255,0.06);
+            flex-shrink:0;
+        }
+        .brand {
+            display:flex; align-items:center; gap:.75rem; margin-bottom: .5rem;
+        }
+        .brand img { height:48px; width:auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,.35)); }
+        .brand h4{ margin:0; color:#fff; font-weight:600; letter-spacing:.2px; }
+
+        .nav-small { margin-top:1rem; }
+        .nav-small a { display:flex; align-items:center; gap:.6rem; color:rgba(255,255,255,.92); padding:.45rem .6rem; border-radius:.5rem; text-decoration:none; }
+        .nav-small a:hover { background: rgba(255,255,255,0.04); }
+
+        .admin-main{
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            gap:1rem;
+            color: #0b1b2a;
+        }
+
+        /* Header */
+        .admin-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:1rem;
+        }
+        .header-left h2{ margin:0; color: #fff; }
+        .header-left small{ color: rgba(255,255,255,0.85); }
+
+        .header-actions { display:flex; gap:.6rem; align-items:center; }
+
+        .logout-btn { background:transparent; border:1px solid rgba(255,255,255,.14); color:#fff; border-radius:.5rem; padding:.4rem .65rem; }
+        .logout-btn:hover{ background: rgba(255,255,255,.06); }
+
+        /* Controls */
+        .controls { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; margin-top:.6rem; }
+
+        .control-input { min-width:220px; max-width:440px; }
+
+        /* Grid */
+        .cards-grid { display:grid; gap:1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); margin-top:1rem; }
+
+        .card-admin {
+            border-radius:.8rem;
+            overflow:hidden;
+            border:1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 8px 22px rgba(8,20,40,0.06);
+        }
+        .card-admin .card-body{ display:flex; flex-direction:column; gap:.6rem; min-height:170px; }
+
+        .status-chip { font-size:.82rem; padding:.35rem .55rem; border-radius:999px; }
+
+        /* responsive adjustments */
+        @@media (max-width: 900px){
+            .admin-sidebar{ display:none; }
+            .admin-shell{ padding:.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid admin-shell">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar" role="navigation" aria-label="Admin navigation">
+            <div class="brand">
+                <img src="~/svg/city-of-cape-town-seeklogo.svg" alt="Municipal Logo" />
+                <div>
+                    <h4>Municipal Admin</h4>
+                    <div class="small text-white-50">Requests management</div>
+                </div>
+            </div>
+
+            <nav class="nav-small" aria-label="Admin links">
+                <a href='@Url.Action("Index","AdminRequests")' class="d-flex align-items-center">
+                    <i class="fa-solid fa-list-check"></i> Manage Requests
+                </a>
+            </nav>
+
+            <hr style="border-color: rgba(255,255,255,.06);" />
+
+            <div class="small text-white-75">
+                <strong>@Model.Requests.Count</strong> requests
+            </div>
+
+            <div class="mt-3">
+                <form method="post" asp-controller="Account" asp-action="Logout">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="logout-btn w-100"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="admin-main" role="main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <h2 class="text-white">Requests</h2>
+                    <small class="text-white-50">Review and update request statuses</small>
+                </div>
+
+                <div class="header-actions">
+                    <div class="me-2 text-white-75 small">Signed in as <strong>@User?.Identity?.Name</strong></div>
+                    <form method="post" asp-controller="Account" asp-action="Logout" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                    </form>
+                </div>
+            </header>
+
+            <!-- Controls -->
+            <section class="bg-white rounded-3 p-3" style="box-shadow:0 6px 20px rgba(4,18,40,0.08);">
+                <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center">
+                    <form id="adminSearchForm" method="get" asp-controller="AdminRequests" asp-action="Index" class="d-flex gap-2 align-items-center w-100">
+                        <input name="q" value="@Model.Query" class="form-control form-control-sm control-input" placeholder="Search description, location or ref..." />
+                        <input type="hidden" name="category" value="@Model.SelectedCategory" id="adminHiddenCategory" />
+                        <select id="adminCategoryFilter" class="form-select form-select-sm" style="width:220px;">
+                            <option value="">All Categories</option>
+                            @foreach (var c in Model.Categories)
+                            {
+                                var isSelected = c == Model.SelectedCategory;
+                                <option value="@c" selected="@(isSelected ? "selected" : null)">@c</option>
+                            }
+                        </select>
+                        <button class="btn btn-sm btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Cards grid -->
+            <section>
+                <div class="cards-grid">
+                    @if (Model.Requests == null || !Model.Requests.Any())
+                    {
+                        <div class="alert alert-info">No requests found.</div>
+                    }
+                    else
+                    {
+                        foreach (var r in Model.Requests)
+                        {
+                            var badgeClass = "bg-secondary text-white";
+                            switch (r.Status?.ToLowerInvariant())
+                            {
+                                case "submitted": badgeClass = "bg-secondary text-white"; break;
+                                case "underreview":
+                                case "under review": badgeClass = "bg-warning text-dark"; break;
+                                case "inprogress":
+                                case "in progress": badgeClass = "bg-info text-dark"; break;
+                                case "resolved": badgeClass = "bg-success text-white"; break;
+                                case "closed": badgeClass = "bg-dark text-white"; break;
+                            }
+                    <article class="card card-admin">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="mb-1">@(!string.IsNullOrEmpty(r.ReporterName) ? r.ReporterName : r.Location)</h5>
+                                    <div class="small text-muted">Ref: <strong>@r.RequestRef</strong></div>
+                                    <div class="small text-muted">@r.Location</div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="status-chip @badgeClass">@r.Status</div>
+                                </div>
+                            </div>
+
+                            <p class="mb-2 text-truncate" style="max-height:3.6rem;">@r.Description</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <div class="small text-muted">@r.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")</div>
+                                <div>
+                                    <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "AdminRequests", new { id = r.RequestRef })">Update</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                        }
+                    }
+                </div>
+            </section>
+
+            <footer class="text-muted small mt-3">
+                © @DateTime.UtcNow.Year — Municipal Services Admin
+            </footer>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            // wire category change to submit
+            const cat = document.getElementById('adminCategoryFilter');
+            const hiddenCat = document.getElementById('adminHiddenCategory');
+            const form = document.getElementById('adminSearchForm');
+
+            cat?.addEventListener('change', function () {
+                const v = this.value;
+                if (hiddenCat) hiddenCat.value = v || '';
+                form?.submit();
+            });
+
+            // clickable card (open first link)
+            document.querySelectorAll('.cards-grid article.card-admin').forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('a')) return;
+                    const link = card.querySelector('a');
+                    if (link) window.location.href = link.getAttribute('href');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

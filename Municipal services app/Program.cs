@@ -18,8 +18,24 @@ var connectionString = $"Data Source={dbPath}";
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 
-// --- Register EventStore as scoped for DI ---
+// --- Register stores/services as scoped for DI ---
 builder.Services.AddScoped<EventStore>();
+builder.Services.AddScoped<RequestStore>();
+
+// Authentication + Authorization (Cookie)
+builder.Services.AddAuthentication("MunicipalCookie")
+    .AddCookie("MunicipalCookie", options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.Cookie.Name = "Municipal.Auth";
+        options.ExpireTimeSpan = TimeSpan.FromHours(4);
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 
@@ -27,12 +43,18 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();  // creates tables if not exist
+    // create DB & tables if missing
+    db.Database.EnsureCreated();
     Seeder.EnsureSeedData(db);
 
-    // Preload EventStore
-    var store = scope.ServiceProvider.GetRequiredService<EventStore>();
-    // no parameter needed: EventStore uses injected DbContext
+    // Preload EventStore and RequestStore so in-memory indexes are ready
+    var eventStore = scope.ServiceProvider.GetRequiredService<EventStore>();
+    // If EventStore has a public LoadFromDatabase() method, call it to build indexes.
+    // If not needed (constructor already does it), this call is harmless if present.
+    eventStore.LoadFromDatabase();
+
+    var requestStore = scope.ServiceProvider.GetRequiredService<RequestStore>();
+    requestStore.LoadFromDatabase();
 }
 
 // --- Middleware / pipeline ---
@@ -42,10 +64,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/Home/Status/{0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
-app.UseStatusCodePagesWithReExecute("/Home/Status/{0}");
+
+// authentication must come before authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

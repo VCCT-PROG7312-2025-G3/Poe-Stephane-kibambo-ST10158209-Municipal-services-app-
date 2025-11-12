@@ -1019,3 +1019,229 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
     margin-bottom: 20px;
     font-weight: 700;
 }
+/* ===== Request Status page styles (modernized) ===== */
+/* Use the same gradient tokens as layout */
+:root {
+    --brand-900: #1d3557; /* dark blue */
+    --brand-700: #2a5298; /* mid blue */
+    --muted: #6c757d;
+}
+
+.requests-page .page-title {
+    font-weight: 600;
+    color: #0f2340;
+}
+
+.search-input {
+    min-width: 360px;
+}
+
+/* Card style */
+.request-card {
+    border-radius: 0.6rem;
+    transition: transform .12s ease, box-shadow .12s ease;
+    overflow: hidden;
+    border: 1px solid rgba(15,35,64,0.06);
+}
+
+    .request-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 30px rgba(17,45,78,0.08);
+    }
+
+/* Highlighted card */
+.request-highlight {
+    border: 2px solid var(--brand-700);
+    box-shadow: 0 8px 28px rgba(42,82,152,0.08);
+}
+
+/* Status badges (consistent) */
+.status-badge {
+    padding: 0.45rem 0.55rem;
+    border-radius: 0.45rem;
+    font-weight: 600;
+}
+
+    .status-badge.secondary {
+        background: #e9ecef;
+        color: #1f2a37;
+    }
+
+    .status-badge.warning {
+        background: #fff3cd;
+        color: #6a4a00;
+    }
+
+    .status-badge.info {
+        background: #e7f5ff;
+        color: #084d7a;
+    }
+
+    .status-badge.success {
+        background: #d4edda;
+        color: #1b6d3a;
+    }
+
+    .status-badge.dark {
+        background: #dcdcdc;
+        color: #111;
+    }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+    .search-input {
+        min-width: 140px;
+    }
+}
+/* ===== Details page styles (align with Status) ===== */
+.detail-card {
+    border-radius: 0.6rem;
+    border: 1px solid rgba(15,35,64,0.06);
+    transition: box-shadow .12s ease;
+}
+
+    .detail-card:hover {
+        box-shadow: 0 10px 30px rgba(17,45,78,0.06);
+    }
+
+.status-badge {
+    display: inline-block;
+    padding: .45rem .6rem;
+    border-radius: .45rem;
+    font-weight: 600;
+}
+
+    /* Palette consistent with status badges used previously */
+    .status-badge.secondary {
+        background: #e9ecef;
+        color: #1f2a37;
+    }
+
+    .status-badge.warning {
+        background: #fff3cd;
+        color: #6a4a00;
+    }
+
+    .status-badge.info {
+        background: #e7f5ff;
+        color: #084d7a;
+    }
+
+    .status-badge.success {
+        background: #d4edda;
+        color: #1b6d3a;
+    }
+
+    .status-badge.dark {
+        background: #dcdcdc;
+        color: #111;
+    }
+
+.request-details-page .card-header {
+    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+}
+
+.request-details-page .card-body {
+    background: #fff;
+}
+
+/* Related list */
+.list-group-item-action {
+    transition: background .08s ease, transform .06s ease;
+}
+
+    .list-group-item-action:hover {
+        background: #f8fbff;
+        transform: translateY(-2px);
+    }
+
+/* Small responsive tweak */
+@media (max-width: 767px) {
+    .detail-card {
+        margin-bottom: 0.5rem;
+    }
+}
+/* ===== Isolated Login Page ===== */
+.login-page-body {
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #1d3557 0%, #2a5298 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.login-section {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 1rem;
+    color: #fff;
+}
+
+.login-logo {
+    width: 90px;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.login-input {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    border-radius: 0.5rem;
+    transition: all .2s ease;
+}
+
+    .login-input::placeholder {
+        color: rgba(255,255,255,0.6);
+    }
+
+    .login-input:focus {
+        background-color: rgba(255,255,255,0.25);
+        box-shadow: 0 0 0 0.25rem rgba(42, 82, 152, 0.3);
+        color: #fff;
+    }
+
+/* Gradient button */
+.btn-brand-gradient {
+    background: linear-gradient(90deg, #2a5298, #1d3557);
+    color: #fff;
+    border: none;
+    transition: all .2s ease;
+}
+
+    .btn-brand-gradient:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+
+/* Back button */
+.btn-outline-light {
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+    .btn-outline-light:hover {
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+    }
+
+/* Responsive */
+@media (max-width: 576px) {
+    .login-logo {
+        width: 70px;
+    }
+
+    .login-card {
+        padding: 1.5rem;
+    }
+}

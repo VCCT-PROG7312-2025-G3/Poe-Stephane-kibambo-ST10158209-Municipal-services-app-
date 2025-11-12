@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Municipal_services_app.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,16 +52,35 @@ namespace Municipal_services_app.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    RequestRef = table.Column<string>(type: "TEXT", maxLength: 12, nullable: false),
                     Location = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
                     Category = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: false),
                     AttachmentPath = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Status = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false)
+                    Status = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    StatusHistory = table.Column<string>(type: "TEXT", nullable: true),
+                    ReporterName = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Issues", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Recommendations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Term = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Count = table.Column<int>(type: "INTEGER", nullable: false),
+                    LastSeen = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recommendations", x => x.Id);
                 });
         }
 
@@ -76,6 +95,9 @@ namespace Municipal_services_app.Migrations
 
             migrationBuilder.DropTable(
                 name: "Issues");
+
+            migrationBuilder.DropTable(
+                name: "Recommendations");
         }
     }
 }

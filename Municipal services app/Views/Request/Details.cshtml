@@ -1,0 +1,200 @@
+﻿@model Municipal_services_app.Controllers.RequestDetailsVm
+@{
+    ViewBag.Title = "Request Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="py-4 request-details-page">
+    <div class="container">
+        <div class="mb-3 d-flex gap-2 align-items-center">
+            <a class="btn btn-link" href="@Url.Action("Status", "Request")">&larr; Back to list</a>
+            @if (Model.Report != null)
+            {
+                <button class="btn btn-outline-secondary btn-sm" id="copyRefBtn" data-ref="@Model.Report.RequestRef" aria-label="Copy request reference">Copy reference</button>
+            }
+        </div>
+
+        @if (Model.Report == null)
+        {
+            <div class="alert alert-warning">Request not found.</div>
+        }
+        else
+        {
+            var r = Model.Report;
+            var badgeClass = "status-badge secondary";
+            switch ((r.Status ?? "").ToLowerInvariant())
+            {
+                case "submitted":
+                    badgeClass = "status-badge secondary"; break;
+                case "underreview":
+                case "under review":
+                    badgeClass = "status-badge warning"; break;
+                case "inprogress":
+                case "in progress":
+                    badgeClass = "status-badge info"; break;
+                case "resolved":
+                    badgeClass = "status-badge success"; break;
+                case "closed":
+                    badgeClass = "status-badge dark"; break;
+            }
+
+            <div class="row g-3">
+                <div class="col-lg-8">
+                    <article class="card detail-card" role="article" aria-labelledby="title-@r.RequestRef">
+                        <div class="card-header d-flex justify-content-between align-items-start">
+                            <div>
+                                <h4 id="title-@r.RequestRef" class="mb-0">@r.RequestRef</h4>
+                                <small class="text-muted">@r.Category</small>
+                                @if (!string.IsNullOrEmpty(r.ReporterName))
+                                {
+                                    <div class="small text-muted">Reported by: @r.ReporterName</div>
+                                }
+                            </div>
+                            <div class="text-end">
+                                <span class="@badgeClass">@r.Status</span>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <section aria-labelledby="desc-heading">
+                                <h6 id="desc-heading" class="visually-hidden">Description</h6>
+                                <p class="fw-bold mb-1">Description</p>
+                                <p class="mb-3">@r.Description</p>
+                            </section>
+
+                            <dl class="row">
+                                <dt class="col-sm-3">Location</dt>
+                                <dd class="col-sm-9">@r.Location</dd>
+
+                                <dt class="col-sm-3">Submitted</dt>
+                                <dd class="col-sm-9">@r.CreatedAt.ToLocalTime().ToString("dd MMM yyyy HH:mm")</dd>
+
+                                <dt class="col-sm-3">Last updated</dt>
+                                <dd class="col-sm-9">@((r.DateUpdated.HasValue) ? r.DateUpdated.Value.ToLocalTime().ToString("dd MMM yyyy HH:mm") : "-")</dd>
+
+                                @if (!string.IsNullOrEmpty(r.AttachmentPath))
+                                {
+                                    <dt class="col-sm-3">Attachment</dt>
+                                    <dd class="col-sm-9">
+                                        @{
+                                            // build safe link to DownloadAttachment action
+                                            var dlUrl = Url.Action("DownloadAttachment", "Request", new { id = r.RequestRef });
+                                        }
+                                        <a class="btn btn-sm btn-outline-secondary" href="@dlUrl" target="_blank" rel="noopener noreferrer" aria-label="View attachment">
+                                            View attachment
+                                        </a>
+                                    </dd>
+                                }
+                            </dl>
+
+                            @if (!string.IsNullOrEmpty(r.StatusHistory))
+                            {
+                                <hr />
+                                <h6>Status history</h6>
+                                <pre class="small bg-light p-2" style="white-space:pre-wrap;">@r.StatusHistory</pre>
+                            }
+                        </div>
+                    </article>
+                </div>
+
+                <aside class="col-lg-4">
+                    <div class="card mb-3">
+                        <div class="card-header"><strong>Actions</strong></div>
+                        <div class="card-body d-flex flex-column gap-2">
+                            <a class="btn btn-outline-primary" href="@Url.Action("Create", "Report")">Submit new request</a>
+                            <a class="btn btn-outline-secondary" href="@Url.Action("Index", "Home")">Back to home</a>
+                        </div>
+                    </div>
+
+                    @if (Model.Related != null && Model.Related.Any())
+                    {
+                        <div class="card">
+                            <div class="card-header"><strong>Related reports</strong></div>
+                            <div class="list-group list-group-flush" role="list">
+                                @foreach (var rel in Model.Related)
+                                {
+                                    <a role="listitem" class="list-group-item list-group-item-action" href="@Url.Action("Details", "Request", new { id = rel.RequestRef })">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong>@rel.RequestRef</strong>
+                                                <div class="small text-muted">@rel.Category</div>
+                                            </div>
+                                            <div class="small text-muted">@rel.CreatedAt.ToLocalTime().ToString("dd MMM")</div>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                </aside>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            const copyBtn = document.getElementById('copyRefBtn');
+
+            function showMessage(text) {
+                if (typeof bootstrap !== 'undefined') {
+                    let host = document.getElementById('toastHost');
+                    if (!host) {
+                        host = document.createElement('div');
+                        host.id = 'toastHost';
+                        host.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+                        host.setAttribute('aria-live', 'polite');
+                        host.setAttribute('aria-atomic', 'true');
+                        document.body.appendChild(host);
+                    }
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'toast align-items-center text-bg-dark border-0';
+                    wrapper.setAttribute('role', 'status');
+                    wrapper.innerHTML = `
+                      <div class="d-flex">
+                        <div class="toast-body">${text}</div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                      </div>`;
+                    host.appendChild(wrapper);
+                    const toast = new bootstrap.Toast(wrapper, { delay: 3000 });
+                    toast.show();
+                    wrapper.addEventListener('hidden.bs.toast', () => wrapper.remove());
+                } else {
+                    alert(text);
+                }
+            }
+
+            function fallbackCopy(text) {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.style.position = 'fixed';
+                    ta.style.left = '-9999px';
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    ta.setSelectionRange(0, ta.value.length);
+                    const ok = document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    if (ok) showMessage('Reference copied: ' + text);
+                    else showMessage('Cannot copy automatically — select and press Ctrl+C.');
+                } catch (e) {
+                    showMessage('Cannot copy automatically — select and press Ctrl+C.');
+                }
+            }
+
+            if (!copyBtn) return;
+            copyBtn.addEventListener('click', function () {
+                const ref = this.dataset.ref || '';
+                if (!ref) { showMessage('Reference not found'); return; }
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(ref).then(() => showMessage('Reference copied: ' + ref))
+                        .catch(() => fallbackCopy(ref));
+                } else {
+                    fallbackCopy(ref);
+                }
+            });
+        })();
+    </script>
+}

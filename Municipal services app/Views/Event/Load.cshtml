@@ -2,6 +2,12 @@
 
 <div class="container mt-3">
     <img src="~/svg/city-of-cape-town-seeklogo.svg" alt="Municipality Logo" class="me-2" style="height: 200px; width: auto;">
+
+    <!-- Hidden form just to render the antiforgery token for AJAX POSTs -->
+    <form id="antiForgeryForm" method="post" style="display:none;" asp-controller="Event" asp-action="RecordSearch">
+        @Html.AntiForgeryToken()
+    </form>
+
     <!-- Toggle Tabs -->
     <div class="d-flex justify-content-center mb-4">
         <button id="btn-events" class="tab-btn active">
@@ -13,27 +19,31 @@
     </div>
 
     <!-- Search + Filters Horizontal -->
-    <div id="filters-section" class="mb-4 d-flex flex-wrap gap-2 align-items-center">
-        <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Search events..." value="@Model.Query" />
+    <form id="searchForm" method="get" asp-action="Load" class="mb-4">
+        <div id="filters-section" class="d-flex flex-wrap gap-2 align-items-center">
+            <input type="text" id="searchInput" name="q" class="form-control flex-grow-1" placeholder="Search events..." value="@Model.Query" />
 
-        <select id="categorySelect" class="form-select">
-            <option value="">All Categories</option>
-            @foreach (var cat in Model.Categories)
-            {
-                @if (Model.SelectedCategory == cat)
+            <select id="categorySelect" name="category" class="form-select">
+                <option value="">All Categories</option>
+                @foreach (var cat in Model.Categories)
                 {
-                    <option value="@cat" selected>@cat</option>
+                    if (Model.SelectedCategory == cat)
+                    {
+                        <option value="@cat" selected>@cat</option>
+                    }
+                    else
+                    {
+                        <option value="@cat">@cat</option>
+                    }
                 }
-                else
-                {
-                    <option value="@cat">@cat</option>
-                }
-            }
-        </select>
+            </select>
 
-        <input type="date" id="fromDate" class="form-control" value="@(Model.From?.ToString("yyyy-MM-dd") ?? "")" />
-        <input type="date" id="toDate" class="form-control" value="@(Model.To?.ToString("yyyy-MM-dd") ?? "")" />
-    </div>
+            <input type="date" id="fromDate" name="from" class="form-control" value="@(Model.From?.ToString("yyyy-MM-dd") ?? "")" />
+            <input type="date" id="toDate" name="to" class="form-control" value="@(Model.To?.ToString("yyyy-MM-dd") ?? "")" />
+
+            <button id="btn-search" type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
 
     <!-- Events Section -->
     <div id="events-section">
@@ -79,104 +89,115 @@
         </div>
     </div>
 
-    <!-- Recommendations Section -->
-    <div id="recommendations-section" style="display:none;" class="mt-4">
+    <!-- Recommendations Section (server-side persisted recommendations) -->
+    <div id="recommendations-section" class="mt-4" style="@((Model.Recommendations == null || !Model.Recommendations.Any()) ? "display:none;" : "")">
         <h3 class="section-title">Recommended for you</h3>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3" id="recommendationsContainer">
-            @* Rempli par JS dynamiquement *@
+            @if (Model.Recommendations != null && Model.Recommendations.Any())
+            {
+                foreach (var rec in Model.Recommendations)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">@rec.Title</h5>
+                                <p class="card-text">@rec.Description</p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <small>@rec.Date.ToString("dd MMM yyyy")</small>
+                                <span class="badge badge-category">@rec.Category</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-muted">No recommendations yet — try searching to build personalised suggestions.</p>
+                </div>
+            }
         </div>
     </div>
 </div>
 
-<script>
-    // --- Tab toggle ---
-    const btnEvents = document.getElementById('btn-events');
-    const btnAnnouncements = document.getElementById('btn-announcements');
-    const eventsSection = document.getElementById('events-section');
-    const announcementsSection = document.getElementById('announcements-section');
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Toggle Events / Announcements buttons
+            const btnEvents = document.getElementById('btn-events');
+            const btnAnnouncements = document.getElementById('btn-announcements');
+            const eventsSection = document.getElementById('events-section');
+            const announcementsSection = document.getElementById('announcements-section');
 
-    btnEvents.addEventListener('click', () => {
-        btnEvents.classList.add('active');
-        btnAnnouncements.classList.remove('active');
-        eventsSection.style.display = 'block';
-        announcementsSection.style.display = 'none';
-    });
+            if (btnEvents && btnAnnouncements && eventsSection && announcementsSection) {
+                btnEvents.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    btnEvents.classList.add('active');
+                    btnAnnouncements.classList.remove('active');
+                    eventsSection.style.display = 'block';
+                    announcementsSection.style.display = 'none';
+                });
 
-    btnAnnouncements.addEventListener('click', () => {
-        btnAnnouncements.classList.add('active');
-        btnEvents.classList.remove('active');
-        eventsSection.style.display = 'none';
-        announcementsSection.style.display = 'block';
-    });
+                btnAnnouncements.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    btnAnnouncements.classList.add('active');
+                    btnEvents.classList.remove('active');
+                    eventsSection.style.display = 'none';
+                    announcementsSection.style.display = 'block';
+                });
+            }
 
-    // --- Live search + recommendations ---
-    const searchInput = document.getElementById('searchInput');
-    const categorySelect = document.getElementById('categorySelect');
-    const fromDate = document.getElementById('fromDate');
-    const toDate = document.getElementById('toDate');
-    const eventsContainer = document.getElementById('eventsContainer');
-    const recommendationsSection = document.getElementById('recommendations-section');
-    const recommendationsContainer = document.getElementById('recommendationsContainer');
+            // When the user submits the search form, persist the search term to server then perform the GET to refresh results.
+            const searchForm = document.getElementById('searchForm');
+            const antiForgeryForm = document.getElementById('antiForgeryForm');
 
-    const eventItems = Array.from(document.querySelectorAll('.event-item'));
-    const searchQueue = []; // queue pour stocker dernières recherches
-    const MAX_QUEUE = 3; // on garde les 3 dernières recherches
+            if (searchForm) {
+                searchForm.addEventListener('submit', async function (e) {
+                    e.preventDefault(); // we'll submit manually after persisting
 
-    function filterEvents() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const category = categorySelect.value;
-        const from = fromDate.value;
-        const to = toDate.value;
+                    // read the inputs to build POST and GET
+                    const q = (document.getElementById('searchInput')?.value || '').trim();
+                    const category = (document.getElementById('categorySelect')?.value || '').trim();
+                    const from = (document.getElementById('fromDate')?.value || '').trim();
+                    const to = (document.getElementById('toDate')?.value || '').trim();
 
-        // stock the search terms in a queu
-        if (searchTerm.trim() !== "") {
-            searchQueue.push(searchTerm);
-            if (searchQueue.length > MAX_QUEUE) searchQueue.shift(); // FIFO
-        }
+                    // persist term to server (if non-empty)
+                    if (q !== '') {
+                        try {
+                            // get antiforgery token from hidden form
+                            const tokenInput = antiForgeryForm ? antiForgeryForm.querySelector('input[name="__RequestVerificationToken"]') : null;
+                            const token = tokenInput ? tokenInput.value : null;
 
-        // Filtrer events
-        let filtered = eventItems.filter(item => {
-            const title = item.dataset.title.toLowerCase();
-            const itemCategory = item.dataset.category;
-            const date = item.dataset.date;
+                            const headers = token ? { 'RequestVerificationToken': token } : {};
+                            const body = new URLSearchParams();
+                            body.append('term', q);
 
-            const matchesTitle = title.includes(searchTerm);
-            const matchesCategory = category === "" || itemCategory === category;
-            const matchesFrom = !from || date >= from;
-            const matchesTo = !to || date <= to;
+                            // POST to RecordSearch (fire-and-wait so server persists before reload)
+                            await fetch('@Url.Action("RecordSearch", "Event")', {
+                                method: 'POST',
+                                headers,
+                                body,
+                                credentials: 'same-origin'
+                            });
+                        } catch (err) {
+                            
+                            console.warn('Could not persist search term:', err);
+                        }
+                    }
 
-            return matchesTitle && matchesCategory && matchesFrom && matchesTo;
+                    // Build query string for GET: use URLSearchParams to preserve values
+                    const params = new URLSearchParams();
+                    if (q) params.append('q', q);
+                    if (category) params.append('category', category);
+                    if (from) params.append('from', from);
+                    if (to) params.append('to', to);
+
+                    // navigate to the Load action with query string (this reloads page and controller will build Recommendations)
+                    const url = '@Url.Action("Load", "Event")' + (params.toString() ? ('?' + params.toString()) : '');
+                    window.location.href = url;
+                });
+            }
         });
-
-        // Afficher/Masquer events
-        eventItems.forEach(item => item.style.display = filtered.includes(item) ? 'block' : 'none');
-
-        // --- Recommandations dynamiques ---
-        if (searchQueue.length > 0) {
-            recommendationsSection.style.display = 'block';
-            recommendationsContainer.innerHTML = "";
-
-            // calcul simple: prend les termes les plus fréquents dans la queue
-            const freqMap = {};
-            searchQueue.forEach(term => {
-                freqMap[term] = (freqMap[term] || 0) + 1;
-            });
-            const topTerm = Object.entries(freqMap).sort((a,b)=>b[1]-a[1])[0][0];
-
-            // afficher top 5 éléments correspondant au topTerm
-            const recs = eventItems.filter(item => item.dataset.title.toLowerCase().includes(topTerm)).slice(0,5);
-            recs.forEach(item => recommendationsContainer.appendChild(item.cloneNode(true)));
-        } else {
-            recommendationsSection.style.display = 'none';
-        }
-    }
-
-    // Events triggers
-    searchInput.addEventListener('input', filterEvents);
-    categorySelect.addEventListener('change', filterEvents);
-    fromDate.addEventListener('change', filterEvents);
-    toDate.addEventListener('change', filterEvents);
-
-    // initial call pour recommandations si page reload
-    filterEvents();
-</script>
+    </script>
+}
