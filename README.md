@@ -41,8 +41,9 @@ all code was reviewed, customized, and tested by the author
 
 ---
 
- 🔐 Admin Login
-🧭 Accessing the Admin Dashboard
+###  🔐 Admin Login
+
+### 🧭 Accessing the Admin Dashboard
 
 Navigate to:
 👉 /Account/Login
